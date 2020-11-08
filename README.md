@@ -1,7 +1,6 @@
 # VQA 
-Rafael Garcia, Bernat Joseph, Pau Gil, Jordi Suñer
-
-November 2020
+* Authors: Rafael Garcia, Bernat Joseph, Pau Gil, Jordi Suñer
+* November 2020
 
 Visual Question Answering (VQA)it's aiming to answer Free-form and open-ended Question about an Image, using Computer Vision & Language Processing(Cool)
 
