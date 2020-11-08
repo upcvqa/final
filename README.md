@@ -4,7 +4,7 @@
 
 ## Introduction
 
-Visual Question Answering (VQA)it's aiming to answer Free-form and open-ended Question about an Image, using Computer Vision & Language Processing(Cool)
+Visual Question Answering (VQA) it's aiming to answer Free-form and open-ended Question about an Image, using Computer Vision & Language Processing
 
 ![VQA examples](https://visualqa.org/static/img/vqa_examples.jpg)
 
