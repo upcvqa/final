@@ -19,6 +19,12 @@ To train this initial model, and due to computing resource limitations, we decid
 With this first dataset we wanted to have a fixed number of outputs at the classifier (20) and a manageable dataset size. We used 750 samples for training and 250 for validation.
 A quick analysis of the dataset showed it was highly unbalanced, with answers 1, 2 and 3 outnumbering the others alltogether.
 
+We managed to train the model but showed signs of overfit:
+
+![](images/model-0100-metrics.png)
+
+We tried to improve the metrics by adding `dropout` layers between the fully connected layers of the classifier and batch normalization but 
+the accuracy peaked around 25% and didn´t get better, even if the model was trained for more epochs.
 
 | Metric | Value |
 | ----------- | ----------- |
