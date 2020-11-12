@@ -49,7 +49,11 @@ A quick analysis of the dataset showed it was highly inbalanced, with answers 1,
 
 A new dataset of 7500 samples (+ 250 for validation) with same selection as before (answers 1-20). Accuracy raised to 35%. Below expectations considering the task had been simplificated.
 
+Using a similar dataset but including only yes/no answer type:
 
+![](images/model-0100-metrics.png)
+
+Accuracy peaked to almost 65% which is also belo expectations as it is only 15 points over random answer.
 
 | Metric | Value |
 | ----------- | ----------- |
