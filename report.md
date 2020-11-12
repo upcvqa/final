@@ -30,15 +30,14 @@ The model had two branches: one for vision (image) and one for language (questio
 With all this variants, a more general approach to the model can be seen as a framework with interchangeable pieces.
 
 ## Initial models
-The best performing model from the paper used a pretrained  **vgg-16** for the vision piece and a 2 layer LSTM for the language channel. As we haven't gone through the NLP part of course at that time and, in order to have a complete working model as soon as possible, we decided to keep the original vision piece but go for pretrained embeddings for the whole question. Looking for a suitable model and after discarding the word oriented alternatives (Glove, Word2Vec), we found Google's [Universal Sentence Encoder](https://static.googleusercontent.com/media/research.google.com/ca//pubs/archive/46808.pdf). It provides 512 dim encodings for each question and there is a Tensor Flow based [implementation](https://tfhub.dev/google/universal-sentence-encoder/4). After checking it worked fine from Google Colab and it did not collide with the rest of our Pytorch code, we used it to build our first model:
+The best performing model from the paper used a pretrained  **vgg-16** for the vision piece and a 2 layer LSTM for the language channel. As we haven't gone through the NLP part of course at that time and, in order to have a complete working model as soon as possible, we decided to keep the original vision piece but go for pretrained embeddings for the whole question. Looking for a suitable model and after discarding the word oriented alternatives (Glove, Word2Vec), we found Google's [Universal Sentence Encoder](https://static.googleusercontent.com/media/research.google.com/ca//pubs/archive/46808.pdf). It provides 512 dim encodings for a sentence(question) and there is a Tensor Flow based [implementation](https://tfhub.dev/google/universal-sentence-encoder/4). After checking it worked fine from Google Colab and it did not collide with the rest of our Pytorch code, we used it to build our first model:
 
 ![](images/model-0100.png)
 
 As the embeddings where of different lengths we decided to use concatenation to combine them (4096+512=4608). The final classifier was a funnel of three fully connected layers (4608-1024-512-20).
 
 To train this initial model, and due to computing resource limitations, we created a custom dataset. It was a very reduced version of the original COCO dataset. It was actually a random selection of 1000 triplets (image, question, annotation) including only answers of type `'number'`and values from 1 to 20 extracted from the [2014 validation dataset](https://visualqa.org/download.html).
-With this first dataset we wanted to have a fixed number of outputs at the classifier (20) and a manageable dataset size. We used 750 samples for training and 250 for validation.
-A quick analysis of the dataset showed it was highly inbalanced, with answers 1, 2 and 3 outnumbering the others alltogether.
+With this first dataset we wanted to have a fixed number of outputs at the classifier (20) and a manageable dataset size. We used 750 samples for training and 250 for validation. We developed a specific `Dataset`object to combine image, question text and annotation extracted from the COCO dataset files.
 
 We managed to train the model but showed signs of overfit:
 
@@ -46,6 +45,7 @@ We managed to train the model but showed signs of overfit:
 
 We tried to improve the metrics by adding `dropout` layers between the fully connected layers of the classifier and batch normalization but 
 the accuracy peaked around 25% and didn´t get better, even if the model was trained for more epochs.
+A quick analysis of the dataset showed it was highly inbalanced, with answers 1, 2 and 3 outnumbering the others alltogether. We used a weighted loss using 1/freq(annotation) to see what was the impact on the accuracy
 
 | Metric | Value |
 | ----------- | ----------- |
@@ -63,7 +63,7 @@ This model's code can be found [here](model-colabs/Model100.ipynb).
 ## Tuning the vision channel
 - Resnet partially trained
 ## Splitting the model
-We realised a bigger dataset would be the best cure for our model's overfit and would bump the metrics but the training was getting considerably long (**10k dataset epoch duration**) and after many long trainings we were sometimes banned to use Google Colab with GPU for some hours. In a Computer Vision lab we learned the trick of precalculating the image embeddings once and reuse them during the training.
+We realised a bigger dataset would be the best cure for our model's overfit and might bump up the metrics but the training was getting considerably long (**10k dataset epoch duration**) and after many long trainings we were sometimes banned to use Google Colab with GPU for some hours. In a Computer Vision lab we learned the trick of precalculating the image embeddings once and reuse them during the training process.
 To implement it, we splitted the model in 2:
 ![](images/model-split.png)
 
