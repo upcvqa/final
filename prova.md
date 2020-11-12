@@ -17,7 +17,7 @@ With all this variants, a more general approach to the model can be seen as a fr
 ## Initial models
 The best performing model from the paper used a pretrained  **vgg-16** for the vision piece and a 2 layer LSTM for the language channel. As we haven't gone through the NLP part of course at that time and, in order to have a complete working model as soon as possible, we decided to keep the original vision piece but go for pretrained embeddings for the whole question. Looking for a suitable model and after discarding the word oriented alternatives (Glove, Word2Vec), we found Google's [Universal Sentence Encoder](https://static.googleusercontent.com/media/research.google.com/ca//pubs/archive/46808.pdf). It provides 512 dim encodings for each question and there is a Tensor Flow based [implementation](https://tfhub.dev/google/universal-sentence-encoder/4). After checking it worked fine from Google Colab and it did not collide with the rest of our Pytorch code, we used it to build our first model:
 
-![](images/model-0100.png)
+![](images/model-0100.png) ![](images/model-0100.png)
 
 As the embeddings where of different lengths we decided to use concatenation to combine them (4096+512=4608). The final classifier was a funnel of three fully connected layers (1024-512-20).
 
@@ -38,7 +38,17 @@ the accuracy peaked around 25% and didn´t get better, even if the model was tra
 | Epochs | 20 |
 | Accuracy (train) | 24.8% |
 | Accuracy (validation) | 79.8% |
-
+## Model variations
+Resnet for vision
+Concat vs pointwise
+Other variations
 ## Tuning the vision channel
+Resnet partially trained
 ## Splitting the model
+Precalculate embeddings
 ## Tuning the language channel
+lstm
+glove+lstm
+# Result analysis
+# Learnings
+# Next steps
