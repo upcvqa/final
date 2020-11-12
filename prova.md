@@ -4,7 +4,8 @@
 Use the paper model as a base to introduce variations in the composing elements:
 - using a different (newer) model for vision
 - using a different strategy for the language channel
-- other variations (replace tanh by relu as non linearity)
+- other variations (ie. replace tanh by relu as non linearity)
+
 Implement tuned models and check their metrics
 
 ## Goals
