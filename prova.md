@@ -1,4 +1,5 @@
 # Introduction
+![VQA examples](https://visualqa.org/static/img/vqa_examples.jpg)
 ## Motivation
 ## Proposal
 Use the paper model as a base to introduce variations in the composing elements:
