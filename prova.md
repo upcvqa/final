@@ -8,7 +8,11 @@ Use the paper model as a base to introduce variations in the composing elements:
 
 Implement tuned models and check their metrics
 
-## Goals
+## Milestones
+- Base model
+- Tuned models
+- Final model
+
 # Working environment
 One of our earliests decissions was to discard Tensor Flow in favour of **Pytorch**. We have had very few labs with Tensor Flow at that time and the learning curve for Pytorch seemed less steep.
 **Google Colab** became quickly our preferred environment due to its easy of use, allowing us to combine text,code and graphics in a single document. The possibility of using GPUs became quickly a must as the size of the datasets got bigger.
@@ -60,14 +64,14 @@ First half uses our custom dataloader but instead of feeding the model, it store
 Second half uses a `TensorDataset`to load the precalculated embeddings after retrieving the lists with `torch.load`and feeds them to the rest of the model (combination + classifier).
 This change really bumped up the overall performance increasing the throughput from 50 samples/sec to 5,000 samples/sec. Additionally we've also been able to use batch sizes as big as 400 while before we were restricted to a maximum of 30. This improved performance allowed us to move from 10k to 100k datasets.
 ## Training with 100k dataset
-Results
+- Results
 ## Tweaking the language channel
-lstm
-glove+lstm
+- lstm
+- glove+lstm
 # Result analysis
-Accuracies by question type
-Interesting data
-Interesting samples
-Interpretation
+- Accuracies by question type
+- Interesting data
+- Interesting samples
+- Interpretation
 # Learnings
 # Next steps
