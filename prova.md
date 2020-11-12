@@ -50,11 +50,11 @@ the accuracy peaked around 25% and didn´t get better, even if the model was tra
 | Accuracy (train) | 24.8% |
 | Accuracy (validation) | 79.8% |
 ## Model variations
-Resnet for vision
-Concat vs pointwise
-Other variations
+- Resnet for vision
+- Concat vs pointwise
+- Other variations
 ## Tuning the vision channel
-Resnet partially trained
+- Resnet partially trained
 ## Splitting the model
 We realised a bigger dataset would be the best cure for our model's overfit and would bump the metrics but the training was getting considerably long (**10k dataset epoch duration**) and after many long trainings we were sometimes banned to use Google Colab with GPU for some hours. In a Computer Vision lab we learned the trick of precalculating the image embeddings once and reuse them during the training.
 To implement it, we splitted the model in 2:
