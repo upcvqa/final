@@ -53,7 +53,7 @@ Using a similar dataset but including only yes/no answer type:
 
 ![](images/model-0100-metrics2.png)
 
-Accuracy peaked to almost 65% which is also belo expectations as it is only 15 points over random answer.
+Accuracy peaked close to 65% which is also belo expectations as it is only 15 points over random answer.
 
 | Metric | Value |
 | ----------- | ----------- |
