@@ -51,6 +51,9 @@ the accuracy peaked around 25% and didn´t get better, even if the model was tra
 | Epochs | 20 |
 | Accuracy (train) | 24.8% |
 | Accuracy (validation) | 79.8% |
+
+This model's code can be found [here](models/model100.ipynb).
+
 ## Model variations
 - Resnet for vision
 - Concat vs pointwise
