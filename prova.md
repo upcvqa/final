@@ -46,9 +46,13 @@ Other variations
 Resnet partially trained
 ## Splitting the model
 Precalculate embeddings
-## Tuning the language channel
+## Tweaking the language channel
 lstm
 glove+lstm
 # Result analysis
+Accuracies by question type
+Interesting data
+Interesting samples
+Interpretation
 # Learnings
 # Next steps
