@@ -38,7 +38,7 @@ As the embeddings where of different lengths we decided to use concatenation to 
 
 To train this initial model, and due to computing resource limitations, we created a custom dataset. It was a very reduced version of the original COCO dataset. It was actually a random selection of 1000 triplets (image, question, annotation) including only answers of type `'number'`and values from 1 to 20 extracted from the [2014 validation dataset](https://visualqa.org/download.html).
 With this first dataset we wanted to have a fixed number of outputs at the classifier (20) and a manageable dataset size. We used 750 samples for training and 250 for validation.
-A quick analysis of the dataset showed it was highly unbalanced, with answers 1, 2 and 3 outnumbering the others alltogether.
+A quick analysis of the dataset showed it was highly inbalanced, with answers 1, 2 and 3 outnumbering the others alltogether.
 
 We managed to train the model but showed signs of overfit:
 
