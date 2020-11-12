@@ -51,7 +51,7 @@ A new dataset of 7500 samples (+ 250 for validation) with same selection as befo
 
 Using a similar dataset but including only yes/no answer type:
 
-![](images/model-0100-metrics.png)
+![](images/model-0100-metrics2.png)
 
 Accuracy peaked to almost 65% which is also belo expectations as it is only 15 points over random answer.
 
