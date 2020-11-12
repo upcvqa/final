@@ -2,14 +2,16 @@
 ![VQA examples](https://visualqa.org/static/img/vqa_examples.jpg)
 ## Motivation
 ## Proposal
+Use the paper model as a base to introduce variations in the composing elements:
+
 ![](images/model-puzle.png)
 
-Use the paper model as a base to introduce variations in the composing elements:
 - using a different (newer) model for vision
 - using a different strategy for the language channel
 - other variations (ie. replace tanh by relu as non linearity)
 
-Implement tuned models and check their metrics
+Implement base and tuned models and check their metrics
+Choose final model and analyze results
 
 ## Milestones
 - Base model
