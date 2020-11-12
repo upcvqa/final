@@ -45,7 +45,9 @@ We managed to train the model but showed signs of overfit:
 
 We tried to improve the metrics by adding `dropout` layers between the fully connected layers of the classifier and batch normalization but 
 the accuracy peaked around 25% and didn´t get better, even if the model was trained for more epochs.
-A quick analysis of the dataset showed it was highly inbalanced, with answers 1, 2 and 3 outnumbering the others alltogether. We used a weighted loss using 1/freq(annotation) to see what was the impact on the accuracy
+A quick analysis of the dataset showed it was highly inbalanced, with answers 1, 2 and 3 outnumbering the others alltogether. We used a weighted loss using #annotations/freq(annotation) to see what was the impact on the accuracy. The result was:
+
+
 
 | Metric | Value |
 | ----------- | ----------- |
