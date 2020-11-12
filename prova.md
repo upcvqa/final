@@ -1,6 +1,12 @@
 # Introduction
 ## Motivation
 ## Proposal
+Use the paper model as a base to introduce variations in the composing elements:
+- using a different (newer) model for vision
+- using a different strategy for the language channel
+- other variations (replace tanh by relu as non linearity)
+Implement tuned models and check their metrics
+
 ## Goals
 # Working environment
 One of our earliests decissions was to discard Tensor Flow in favour of **Pytorch**. We have had very few labs with Tensor Flow at that time and the learning curve for Pytorch seemed less steep.
@@ -45,13 +51,15 @@ Other variations
 ## Tuning the vision channel
 Resnet partially trained
 ## Splitting the model
-We realised a bigger dataset would be the best cure for our model's overfit and would bump the metrics but the training was getting considerably long (**10k dataset epoch duration**) and after many long trainings we were sometimes banned to use Google Colab with GPU for some hours. After a lab on transfer learning we learned the possibility to precalculate the image embeddings once and reuse them during the training.
+We realised a bigger dataset would be the best cure for our model's overfit and would bump the metrics but the training was getting considerably long (**10k dataset epoch duration**) and after many long trainings we were sometimes banned to use Google Colab with GPU for some hours. In a Computer Vision lab we learned the trick of precalculating the image embeddings once and reuse them during the training.
 To implement it, we splitted the model in 2:
 ![](images/model-split.png)
 
 First half uses our custom dataloader but instead of feeding the model, it stores the precalculated embeddings in lists (image and question). These two lists of tensors are then stored to disk using `torch.save`. Along with these two lists, a list with the annotations, a list index-to-annotation and a dictionary with additional information about the sample are also stored.
 Second half uses a `TensorDataset`to load the precalculated embeddings after retrieving the lists with `torch.load`and feeds them to the rest of the model (combination + classifier).
-This change really bumped up the overall performance increasing the throughput from 50 samples/sec to 5,000 samples/sec. Additionally we've also been able to use batch sizes as big as 400 while before we were restricted to a maximum of 30.
+This change really bumped up the overall performance increasing the throughput from 50 samples/sec to 5,000 samples/sec. Additionally we've also been able to use batch sizes as big as 400 while before we were restricted to a maximum of 30. This improved performance allowed us to move from 10k to 100k datasets.
+## Training with 100k dataset
+Results
 ## Tweaking the language channel
 lstm
 glove+lstm
