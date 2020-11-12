@@ -45,7 +45,7 @@ Other variations
 ## Tuning the vision channel
 Resnet partially trained
 ## Splitting the model
-Precalculate embeddings
+![](images/model-split.png)
 ## Tweaking the language channel
 lstm
 glove+lstm
