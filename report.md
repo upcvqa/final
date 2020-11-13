@@ -70,7 +70,7 @@ This model's code can be found [here](model-colabs/Model100.ipynb).
 - Concat vs pointwise
 - Other variations
 ## Tuning the vision channel
-- Resnet partially trained
+### Model baseline with Resnet
 
 As part of the intial research on the Vision channel we started considering the alternatives that we could have to VGG:
 ![](images/VisionAlternatives.png)
