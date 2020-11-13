@@ -199,33 +199,39 @@ On the down size, precalculating the image embeddings prevents from finetuning t
 ## Tweaking the language channel
 ### Learning the question embedding: introducing LSTM
 
-As the course advanced we felt ready for the full implementation of one of the models from the VQA paper of 2015 including the question embedding. This embedding consists of two layers: the first one is a simle look-up table embedding for the words appearing in the training set, the second one is an LSTM layer. The final question embedding os obtained by concatenating the las hidden state and the last cell state of the LSTM output.
+As the course advanced we felt ready for the full implementation of one of the models from the VQA paper of 2015 including the question embedding. This embedding consists of two layers: the first one is a simle look-up table embedding for the words appearing in the training set, the second one is an LSTM layer. The final question embedding is obtained by concatenating the las hidden state and the last cell state of the LSTM output.
 
 ![](images/model-0400.PNG)
 
-The goal of this implemetation was to determine wether including the question embedding as a trainable part of the network wolud result into a better accuracy. Following the same rationale of the previous experiments regarding the pre-trained image classification network, a Res-Net50 version of the has also been implemented and tested. 
+The goal of this implemetation was to determine wether including the question embedding as a trainable part of the network wolud result into a better accuracy. Following the same rationale of the previous experiments regarding the pre-trained image classification network, a Res-Net50 version of the model has also been tested. 
 
-A first implementation showed that results are similar to those obtained with the GUSE embedding used in the previous models, with test accuracies around 40%. Differences between the VGG16 and the ResNet50 versions of the model do not show any relevant difference.
+A first implementation showed results similar to those obtained with the GUSE embedding used in the previous models, with test accuracies in the 35%-40% range (see the table at the end of this section for details). In this case the original paper choice for a VGG16 network results in an +5% accuracy increase with respect to the ResNet50 version. Loss curves show a clear overfitting case with the loss of the test set starting to increase after a few training epochs.
+
+![](images/Original_VQA2015_VGG_metrics.png)
+![](images/Original_VQA2015_ResNet_metrics.png)
 
 In an attempt to improve these results several improvements were applied to the original model:
 
-- Tanh activation was removed from the word embedding
+- Tanh activation was removed after the word embedding
 - All other Tanh activations were replaced by ReLU activations
 - Hidden LSTM states were restarted at each batch
 - Dropouts were removed
 
-After these improvements test accuracies did not show any improvement. However, it is noticeable that the improved networks are able to learn way faster, reaching accuracies in the training set around the 80% mark after only 20 epochs, while the original models did not even reach 70% after 100 epochs. The test accuracies, however are again in the same range as that of other model trained with the same dataset.
+After these improvements test accuracies for the VGG16 did not show any relevant improvement. However, the ResNet50 version of the implementation showed a +7% accuracy increase resulting in the best-performing model of this experiment. In both cases, it can be noticed that the improved networks are able to learn way faster, reaching accuracies in the training set around the 80% mark after only 20 epochs, while the original models did not even reach 70% after 100 epochs. The test accuracies, however are again in the same range as that of other model trained with the same dataset. Loss curves show the same behaviour as the one obtained with the original model.
+
+![](images/Improved_VQA2015_VGG_metrics.png)
+![](images/Improved_VQA2015_ResNet_metrics.png)
 
 The following table summarizes the results obtained in these experiments:
 
 |                   	| Maximum Test Accuracy 	| Maximum Mean  Train Accuracy 	|
 |:-----------------:	|:---------------------:	|:----------------------------:	|
 |   Original VGG16  	|         40.60%        	|            71.90%            	|
-| Original Resnet50 	|         00.00%        	|            00.00%            	|
+| Original Resnet50 	|         35.10%        	|            61.87%            	|
 |   Improved VGG16  	|         41.90%        	|            86.23%            	|
 | Improved Resnet50 	|         42.00%        	|            85.83%            	|
 
-The inclusion of a word embedding plus LSTM for the qustion embedding did not show relevant improvements to the overall accuracy. The similar accuracies obtained with all differnt tested architechtures suggests that no further accuracy can be reached using the current dataset.
+The inclusion of a word embedding plus LSTM for the qustion embedding did not show relevant improvements to the overall accuracy compared to pre-trained embeddings. The similar accuracies obtained with all differnt tested architechtures suggests that no further accuracy increase can be reached using the current dataset. The imporved models that have shown a faster learning capacity would be nice candidates for a test with a larger dataset.
 
 ### glove+lstm
 GloVe word embeddings + double layer bidirectional lstm
