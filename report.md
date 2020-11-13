@@ -92,4 +92,11 @@ On the down size, precalculating the image embeddings prevents from finetuning t
 - Interesting samples
 - Interpretation
 # Learnings
+- Before a dot product, normalize the vectors
+- Split the model if image embeddings are static to reduce training times and resources needed
+- Dataset size is critical. The bigger the better.
 # Next steps
+- Use image embedding as initial context for the LSTM 
+- Add attention to the language branch
+- Add attention to the language branch but using the image embedding
+- Enrich image information with object detection/object segmentation info
