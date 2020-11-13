@@ -110,6 +110,23 @@ On the down size, precalculating the image embeddings prevents from finetuning t
 - glove+lstm
 # Result analysis
 - Accuracies by question type
+
+| Question type |  # questions  |  Hits  | % T1 |  Hits top 5  | % T5 |	
+| --------- |  ---------:  |  ---------:  | :---------: |  ---------:  | :---------: |
+| what sport is             | 121 | 101 | 83,5% | 116 | 95,9% | 
+| is there a                | 522 | 431 | 82,6% | 521 | 99,8% | 
+| what room is              | 100 | 81 | 81,0% | 96 | 96,0% | 
+| can you                   | 97 | 67 | 69,1% | 95 | 97,9% | 
+| is the woman              | 129 | 89 | 69,0% | 127 | 98,4% | 
+| is there                  | 350 | 240 | 68,6% | 347 | 99,1% | 
+| is the person             | 82 | 55 | 67,1% | 78 | 95,1% | 
+| do                        | 182 | 122 | 67,0% | 180 | 98,9% | 
+| does the                  | 357 | 238 | 66,7% | 347 | 97,2% | 
+| is it                     | 410 | 268 | 65,4% | 405 | 98,8% | 
+| is that a                 | 84 | 52 | 61,9% | 83 | 98,8% | 
+| what animal is            | 102 | 62 | 60,8% | 80 | 78,4% | 
+| is the                    | 1969 | 1185 | 60,2% | 1900 | 96,5% | 
+
 - Interesting data
 - Interesting samples
 - Interpretation
