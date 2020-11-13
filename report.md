@@ -55,8 +55,8 @@ Using a similar dataset but including only yes/no answer type:
 
 Accuracy peaked close to 65% which is also belo expectations as it is only 15 points over random answer.
 
-| Metric |  Value |
-| --------- |  ---------:  |
+| Metric | Value |
+| ----------- | ----------- |
 | Throughput | 24.8 samples/s |
 | Epochs | 20 |
 | Accuracy (train) | 24.8% |
@@ -70,6 +70,11 @@ This model's code can be found [here](model-colabs/Model100.ipynb).
 - Other variations
 ## Tuning the vision channel
 - Resnet partially trained
+
+As part of the intial research on the Vision channel we started considering the alternatives that we could have to VGG:
+![](images/VisionAlternatives.png)
+
+
 ## Splitting the model
 We realised a bigger dataset would be the best cure for our model's overfit and might bump up the metrics but the training was getting considerably long (ie. 100 minutes for 7,500 samples and 30 epochs) and after many long trainings we were sometimes banned to use Google Colab with GPU for some hours. In a Computer Vision lab we learned the trick of precalculating the image embeddings once and reuse them during the training process.
 To implement it, we splitted the model in 2:
@@ -88,23 +93,6 @@ On the down size, precalculating the image embeddings prevents from finetuning t
 - glove+lstm
 # Result analysis
 - Accuracies by question type
-
-| Question type |  # questions  |  Hits  | % T1 |  Hits top 5  | % T5 |
-| --------- |  ---------:  |  ---------:  | :---------: |  ---------:  | :---------: |
-| what sport is             | 121 | 101 | 0,834710743801653 | 116 | 0,958677685950413 | 
-| is there a                | 522 | 431 | 0,825670498084291 | 521 | 0,998084291187739 | 
-| what room is              | 100 | 81 | 0,81 | 96 | 0,96 | 
-| can you                   | 97 | 67 | 0,690721649484536 | 95 | 0,979381443298969 | 
-| is the woman              | 129 | 89 | 0,689922480620155 | 127 | 0,984496124031008 | 
-| is there                  | 350 | 240 | 0,685714285714286 | 347 | 0,991428571428571 | 
-| is the person             | 82 | 55 | 0,670731707317073 | 78 | 0,951219512195122 | 
-| do                        | 182 | 122 | 0,67032967032967 | 180 | 0,989010989010989 | 
-| does the                  | 357 | 238 | 0,666666666666667 | 347 | 0,971988795518207 | 
-| is it                     | 410 | 268 | 0,653658536585366 | 405 | 0,98780487804878 | 
-| is that a                 | 84 | 52 | 0,619047619047619 | 83 | 0,988095238095238 | 
-| what animal is            | 102 | 62 | 0,607843137254902 | 80 | 0,784313725490196 | 
-| is the                    | 1969 | 1185 | 0,601828339258507 | 1900 | 0,964956830878619 | 
-
 - Interesting data
 - Interesting samples
 - Interpretation
