@@ -136,6 +136,11 @@ For this experiment we have used again our model 1.f and build the variants 1.fB
 |1.fB| Resnet50 frozen|
 |1.fC| Resnet50 last Convolutional train|
 
+We perfom the evaluation of these 3 models for the datasets D & E and see below the results:
+
+![](images/ResnetTrainvsFrozen.png)
+
+These results seem to confirm that training the vision channel with the classifier better accuracy results in validation can be achieved.
 
 ## Splitting the model
 We realised a bigger dataset would be the best cure for our model's overfit and might bump up the metrics but the training was getting considerably long (ie. 100 minutes for 7,500 samples and 30 epochs) and after many long trainings we were sometimes banned to use Google Colab with GPU for some hours. In a Computer Vision lab we learned the trick of precalculating the image embeddings once and reuse them during the training process.
