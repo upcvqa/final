@@ -1,8 +1,26 @@
-test branch Jordi
+# VQA 
+* Authors: Rafael Garcia, Bernat Joseph, Pau Gil, Jordi Suñer
+* Team Advisor: Issey Masuda
+* November 2020
+
+
 # Introduction
+Visual Question Answering (VQA) it's aiming to answer Free-form and open-ended Question about an Image, using Computer Vision & Language Processing
+
 ![VQA examples](https://visualqa.org/static/img/vqa_examples.jpg)
 ## Motivation
+We have decided this project because we considered that being able to answer a question from an image using AI it's 'cool' and, more importantly, it is a project that due to the multimodal approach requires that you must understand two of the most important disciplines in AI-DL: vision and language processing.
+
+In addition it's an area relatively new.  (2014 - Papers 2015) with plenty of opportunities for improvement and several possible business applications: 
+* Image retrieval - Product search in digital catalogs (e.g: Amazon)
+* Human-computer interaction (e.g.: Ask to a camera the weather)
+* Intelligence Analysis
+* support visually impaired individuals
+
 ## Proposal
+
+There are several possibilities to address VQA and this project has been based on VQA 2015 paper: https://arxiv.org/pdf/1612.00837.pdf
+
 Use the paper model as a base to introduce variations in the composing elements:
 
 ![](images/model-puzle.png)
@@ -215,9 +233,29 @@ On the down size, precalculating the image embeddings prevents from finetuning t
 -- Ocluded individuals in how-many questions
 - Interpretation
 # Learnings
-- Before a dot product, normalize the vectors
-- Split the model if image embeddings are static to reduce training times and resources needed
-- Dataset size is critical. The bigger the better.
+- Multimodal has helps us:
+    - Consolidate knowledge around Vision
+    - Consolidate knowledge around NLP
+    - Learn different possibilities about how to combine the results of different networks (e.g.: pointwise, concat, Before a dot product, normalize the vectors)
+- Dataset:
+  - - Dataset size is critical - The bigger the better. Balance, Optimization based on pre-calculated embeddings
+- Classifier:
+  - Augmentation Layer, Multilayer FC feature reduction (funnel), Dropout, Batchnorm
+- Vision:
+  - VGG, Resnet
+- Language:
+  -Google sentence encoder, Glove, Own encoders
+- Train:
+  - Loss, train accuracy and validation accuracy plots interpretation
+  - How to combine Batch size, lr and lr schedulers
+  - Transfer learning at different levels (e.g.: frozen pre-trained network, partial training or a pre-trained network, full training of a pretrained network)
+  - Split the model if image embeddings are static to reduce training times and resources needed
+- Visualitzation:
+  - Plots, Tensoboards
+- General:
+  - Learn and progress by defining hypothesis, run experiments and extract conclusions and new hypothesis.
+
+
 # Next steps
 - Use image embedding as initial context for the LSTM 
 - Add attention to the language branch
