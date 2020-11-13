@@ -127,6 +127,20 @@ On the down size, precalculating the image embeddings prevents from finetuning t
 | what animal is            | 102 | 62 | 60,8% | 80 | 78,4% | 
 | is the                    | 1969 | 1185 | 60,2% | 1900 | 96,5% | 
 
+| Question type |  # questions  |  Hits  | % T1 |  Hits top 5  | % T5 |	
+| --------- |  ---------:  |  ---------:  | :---------: |  ---------:  | :---------: |
+| what does the             | 226 | 41 | 18,1% | 58 | 25,7% | 
+| who is                    | 135 | 23 | 17,0% | 65 | 48,1% | 
+| where are the             | 137 | 23 | 16,8% | 48 | 35,0% | 
+| where is the              | 452 | 73 | 16,2% | 165 | 36,5% | 
+| what time                 | 186 | 30 | 16,1% | 61 | 32,8% | 
+| how                       | 284 | 38 | 13,4% | 89 | 31,3% | 
+| why                       | 151 | 15 | 9,9% | 35 | 23,2% | 
+| why is the                | 76 | 6 | 7,9% | 12 | 15,8% | 
+| what is the name          | 79 | 5 | 6,3% | 7 | 8,9% | 
+| what number is            | 74 | 3 | 4,1% | 8 | 10,8% | 
+
+
 - Interesting data
 - Interesting samples
 -- Elephant butt
