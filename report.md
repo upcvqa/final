@@ -196,8 +196,13 @@ On the down size, precalculating the image embeddings prevents from finetuning t
 ## Training with 100k dataset
 - Results
 ## Tweaking the language channel
-- lstm
-- glove+lstm
+### lstm
+End to end learning for the language channel
+
+![](images/model-0400.PNG)
+
+### glove+lstm
+GloVe word embeddings + double layer bidirectional lstm
 # Result analysis
 These results are obtained from the testing dataset (# samples) after training the xxxx model for xxx epochs with xxxx samples (training) and yyyy samples (validation)
 ## Accuracies by question type (*best accuracies excluding yes/no questions*)
@@ -234,8 +239,14 @@ These results are obtained from the testing dataset (# samples) after training t
 | what number is            | 74 | 3 | 4,1% | 8 | 10,8% | 
 
 
-- Interesting data
-- Interesting samples
+## Interesting data
+## Interesting samples
+
+<p float="left">
+  <img src="images/elephant-butt.PNG" width="450" />
+  <img src="images/3-elephants.PNG" width="450" /> 
+</p>
+
 -- Elephant butt
 -- Ocluded individuals in how-many questions
 - Interpretation
@@ -246,7 +257,7 @@ These results are obtained from the testing dataset (# samples) after training t
     - Learn different possibilities about how to combine the results of different networks (e.g.: pointwise, concat, Before a dot product, normalize the vectors)
 - Dataset:
   - Dataset size is critical - The bigger the better
-  - Balance
+  - Class balance
   - Performance increase based on pre-calculated embeddings
 - Classifier:
   - Augmentation Layer, Multilayer FC feature reduction (funnel), Dropout, Batchnorm
