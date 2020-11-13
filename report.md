@@ -78,19 +78,27 @@ As part of the intial research on the Vision channel we started considering the 
 from all the alternatives we selected to focus on RESNET as it is one of the most common networks used today and with less computation efforts delivers better accuracy than VGGs
 
 As part of this evaluation we wanted to check also the relevance or not of the size of the RESNET output as we were having the intuition that larger output should imply more features/resolution to help the rest of the network to deliver better accuracy.
+Additionally based on previous results we were also getting the intuition that the network was not delivering better accuracy as the Dataset was too small and for this reason we created a new larger dataset
+
 So the experiment was looking to check:
 1. Is it better RESNET than VGG?
-2. Doe it matter the output resolution of vision channel?
+2. Does it matter the output resolution of vision channel?
+3. Increasing the Dataset would the network perform better and leverage more powerful architectures?
 
+Based on this we have selected the following: 
+|RESNET| Output Features |
+|------|----------------
+|RESNET18|512|
+|RESNET50|2048|
 
-RESNET18
+Experiment Results:
 
-RESNET50
+| Model Name | Model Architecture | Dataset A | Dataset C | Dataset D |
+|---- |--- |:----:|:----:|:----:|
+|1.e | RESNET18 (512), concat 1024, 1024->4096->1024->n Classes Batchnorm, dropout|34%|33.4%|34%|
+|1.f | RESNET50 (2048), concat 2560, 2560->4096->1024->n Classes Batchnorm, dropout|33.6%|33.68|36.4%|
 
-
-
-
-
+![](images/resnet18vsresnet50.png)
 
 ## Splitting the model
 We realised a bigger dataset would be the best cure for our model's overfit and might bump up the metrics but the training was getting considerably long (ie. 100 minutes for 7,500 samples and 30 epochs) and after many long trainings we were sometimes banned to use Google Colab with GPU for some hours. In a Computer Vision lab we learned the trick of precalculating the image embeddings once and reuse them during the training process.
