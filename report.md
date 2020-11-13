@@ -102,6 +102,30 @@ Experiment Results:
 
 Looking at the results obtained and the ones that we had when using first models based on VGG we got the intuition that the model that was using RESNET was getting better accuracy speacilly when the dataset was bigger however at this point of the research we coudln't yet confirm it as the models were having other differences. This is going to become a new hypothesis to be validated with additional tests.
 
+## Is the model actually learning something?
+At some point of the research we were having doubts about if the model was actually learning as much as it could learn although the losses were indicating that it was learning. The main reason for this concern it's also because in just a few epoch the model stopped increasing accuracy in validation.
+
+We came back to check what where the results of the models participating in VQA challenges. 
+VQA organization is doing challenges every year and you could find the results on the 'Challenge' option of the menu and then click on 'Leaderboards'. For instace the results for 2016 are in You could find in https://visualqa.org/challenge_2016.html. We have been using these results as our model was starting from the architecture proposed on their paper from 2015.
+
+![](images/VQAOpenEndedChallengeLeaderboard2016.png)
+
+Comparing our 36.4% with Dataset D and the results of this table and bearing in mind our hypothesis that a larger dataset would help us to increase we got the intuition that we were going in the right direction and we could accept that the model was learning properly.
+
+In order to perform an extra validation we decided then to focus on the 'Yes/No' type of question as we were doing the assumption that creating a dataset only focusing on answering (Yes/No) will be acting as a larger dataset as we'll have on this case thousands (10K) of images but just for 2 classes.
+
+
+So the new experiment consisted on creating a new 10K dataset with questions where the answer only could be "Yes/No".
+For this experiment we used the model 1.f introduced before.
+See below the results in a similar format than the one used for VQA organization.
+
+|Model|Dataset 10K Number (1-20) | Dataset 10K Yes / No | Average|
+|---|---|:---:|:---:|:---:|
+|1.f|36.4%|68%|52.2%|
+
+Based on these results we got confidence with our model and make us focus about how we could scale to train with larger datasets.
+
+
 ## Splitting the model
 We realised a bigger dataset would be the best cure for our model's overfit and might bump up the metrics but the training was getting considerably long (ie. 100 minutes for 7,500 samples and 30 epochs) and after many long trainings we were sometimes banned to use Google Colab with GPU for some hours. In a Computer Vision lab we learned the trick of precalculating the image embeddings once and reuse them during the training process.
 To implement it, we splitted the model in 2:
