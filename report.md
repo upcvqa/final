@@ -74,6 +74,22 @@ This model's code can be found [here](model-colabs/Model100.ipynb).
 As part of the intial research on the Vision channel we started considering the alternatives that we could have to VGG:
 ![](images/VisionAlternatives.png)
 
+from all the alternatives we selected to focus on RESNET as it is one of the most common networks used today and with less computation efforts delivers better accuracy than VGGs
+
+As part of this evaluation we wanted to check also the relevance or not of the size of the RESNET output as we were having the intuition that larger output should imply more features/resolution to help the rest of the network to deliver better accuracy.
+So the experiment was looking to check:
+1. Is it better RESNET than VGG?
+2. Doe it matter the output resolution of vision channel?
+
+
+RESNET18
+
+RESNET50
+
+
+
+
+
 
 ## Splitting the model
 We realised a bigger dataset would be the best cure for our model's overfit and might bump up the metrics but the training was getting considerably long (ie. 100 minutes for 7,500 samples and 30 epochs) and after many long trainings we were sometimes banned to use Google Colab with GPU for some hours. In a Computer Vision lab we learned the trick of precalculating the image embeddings once and reuse them during the training process.
