@@ -129,6 +129,8 @@ On the down size, precalculating the image embeddings prevents from finetuning t
 
 - Interesting data
 - Interesting samples
+-- Elephant butt
+-- Ocluded individuals in how-many questions
 - Interpretation
 # Learnings
 - Before a dot product, normalize the vectors
