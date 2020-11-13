@@ -120,10 +120,21 @@ For this experiment we used the model 1.f introduced before.
 See below the results in a similar format than the one used for VQA organization.
 
 |Model|Dataset 10K Number (1-20) | Dataset 10K Yes / No | Average|
-|---|---|:---:|:---:|:---:|
+|---|:---:|:---:|:---:|
 |1.f|36.4%|68%|52.2%|
 
 Based on these results we got confidence with our model and make us focus about how we could scale to train with larger datasets.
+
+## How important is to train only classifier vs train also vision?
+As we were looking for options to scale the training but using the same infrastructure we decided to investigate if training also the vison channel was delivering better results. Overall the idea was that if it is not bring better results to train together classifier and vision channel then we could process the images embeddings before the training so the performance and resource consumption will be lower during training.
+
+For this experiment we have used again our model 1.f and build the variants 1.fB and 1.fC as described below:
+
+|Model|RESNET|
+|---|---|
+|1.f| Resnet50 train|
+|1.fB| Resnet50 frozen|
+|1.fC| Resnet50 last Convolutional train|
 
 
 ## Splitting the model
