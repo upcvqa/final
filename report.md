@@ -70,6 +70,10 @@ This model's code can be found [here](model-colabs/Model100.ipynb).
 - Other variations
 ## Tuning the vision channel
 - Resnet partially trained
+
+As part of the intial research on the Vision channel we started considering the alternatives that we could have to VGG:
+![l(images/VisionAlternatives.png)
+
 ## Splitting the model
 We realised a bigger dataset would be the best cure for our model's overfit and might bump up the metrics but the training was getting considerably long (ie. 100 minutes for 7,500 samples and 30 epochs) and after many long trainings we were sometimes banned to use Google Colab with GPU for some hours. In a Computer Vision lab we learned the trick of precalculating the image embeddings once and reuse them during the training process.
 To implement it, we splitted the model in 2:
