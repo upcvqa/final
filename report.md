@@ -19,18 +19,19 @@ In addition it's an area relatively new.  (2014 - Papers 2015) with plenty of op
 
 ## Proposal
 
-There are several possibilities to address VQA and this project has been based on VQA 2015 paper: https://arxiv.org/pdf/1612.00837.pdf
+There are several ways to address VQA and this project has been based on VQA 2015 paper: https://arxiv.org/pdf/1612.00837.pdf
 
-Use the paper model as a base to introduce variations in the composing elements:
+Our proposal is use the paper model as a base and introduce variations in the composing elements:
 
 ![](images/model-puzle.png)
 
 - using a different (newer) model for vision
 - using a different strategy for the language channel
+- using different embedding combination operations
 - other variations (ie. replace tanh by relu as non linearity)
 
 Implement base and tuned models and check their metrics
-Choose final model and analyze results
+Choose a final model and analyze its results
 
 ## Milestones
 - Base model
@@ -84,7 +85,7 @@ Accuracy peaked close to 65% which is also belo expectations as it is only 15 po
 This model's code can be found [here](model-colabs/Model100.ipynb).
 
 ## Model variations
-- Resnet for vision
+- Changes in the classifier
 - Concat vs pointwise
 - Other variations
 ## Tuning the vision channel
@@ -104,6 +105,9 @@ So the experiment was looking to understand:
 3. Increasing the Dataset would the network perform better and leverage more powerful architectures?
 
 Based on this we have selected the following: 
+- resnet-18 (embedding size: 512)
+- resnet-50 (embedding size: 2048)
+
 |RESNET| Output Features |
 |------|----------------
 |RESNET18|512|
@@ -195,7 +199,8 @@ On the down size, precalculating the image embeddings prevents from finetuning t
 - lstm
 - glove+lstm
 # Result analysis
-- Accuracies by question type
+These results are obtained from the testing dataset (# samples) after training the xxxx model for xxx epochs with xxxx samples (training) and yyyy samples (validation)
+## Accuracies by question type (*best accuracies excluding yes/no questions*)
 
 | Question type |  # questions  |  Hits  | % T1 |  Hits top 5  | % T5 |	
 | --------- |  ---------:  |  ---------:  | :---------: |  ---------:  | :---------: |
@@ -212,6 +217,8 @@ On the down size, precalculating the image embeddings prevents from finetuning t
 | is that a                 | 84 | 52 | 61,9% | 83 | 98,8% | 
 | what animal is            | 102 | 62 | 60,8% | 80 | 78,4% | 
 | is the                    | 1969 | 1185 | 60,2% | 1900 | 96,5% | 
+
+## Accuracies by question type (*worst accuracies excluding yes/no questions*)
 
 | Question type |  # questions  |  Hits  | % T1 |  Hits top 5  | % T5 |	
 | --------- |  ---------:  |  ---------:  | :---------: |  ---------:  | :---------: |
@@ -238,7 +245,9 @@ On the down size, precalculating the image embeddings prevents from finetuning t
     - Consolidate knowledge around NLP
     - Learn different possibilities about how to combine the results of different networks (e.g.: pointwise, concat, Before a dot product, normalize the vectors)
 - Dataset:
-  - - Dataset size is critical - The bigger the better. Balance, Optimization based on pre-calculated embeddings
+  - Dataset size is critical - The bigger the better
+  - Balance
+  - Performance increase based on pre-calculated embeddings
 - Classifier:
   - Augmentation Layer, Multilayer FC feature reduction (funnel), Dropout, Batchnorm
 - Vision:
