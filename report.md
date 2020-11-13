@@ -142,6 +142,24 @@ We perfom the evaluation of these 3 models for the datasets D & E and see below 
 
 These results seem to confirm that training the vision channel with the classifier better accuracy results in validation can be achieved.
 
+## Classifier Architecture
+At the initial stages of the projects we started with a simple classifier that was taking as input the information from Vision and Langugage channels and reducing it directly to the number of classes that we had to predict for that dataset.
+After a few tests we got the intuition than the size of the layers and also the number of layers in addition to techniques like dropout and batchnorm could help us to increase.
+
+For this reason we run an experiment to compare 2 models where the unique difference was the architecture of the classifier.
+The objective was to compare if the accuracy of the model increases adding one intermediate level on the classifier smaller than the input size and large than the output in order to smoothly decrease from the 4096 to the output (20)
+
+For this experiment we have used our models 1.b & 1.c and Datasets A and C
+
+| Model Name | Model Architecture |
+|---- |--- |
+|1.b | RESNET18 (512), pointwise 512, 512->4096->n Classes|
+|1.c | RESNET18 (512), pointwise 512, 512->4096->1024->n Classes|
+
+![](images/AddFClayer.png)
+
+As we can see this multilayer approach with progressive reduction of the number of features in the the input to the output it's increasing the accuracy of the model.
+
 ## Splitting the model
 We realised a bigger dataset would be the best cure for our model's overfit and might bump up the metrics but the training was getting considerably long (ie. 100 minutes for 7,500 samples and 30 epochs) and after many long trainings we were sometimes banned to use Google Colab with GPU for some hours. In a Computer Vision lab we learned the trick of precalculating the image embeddings once and reuse them during the training process.
 To implement it, we splitted the model in 2:
@@ -205,3 +223,4 @@ On the down size, precalculating the image embeddings prevents from finetuning t
 - Add attention to the language branch
 - Add attention to the language branch but using the image embedding
 - Enrich image information with object detection/object segmentation info
+- Train Vision in addition to classifier
