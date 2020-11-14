@@ -425,7 +425,7 @@ Preliminary tests showed that out of the several decisions to be made based on t
 
 Final test with the 100k databease, however, showed that the different models attained similar accuracy results. This fact suggests that such accuracies could already be the best to be obtained with the 100k dataset and that further improvement would not come from improving the models' architecture, depth or tuning, but by increasing again the dataset size.
 
-Focusing on the lessons learned during the project besides the particular resuts obtained with each model, we would like to highlight several implementation, tuning and know-hows summayzed in the following list:
+Focusing on the lessons learned during the project besides the particular resuts obtained with each model, we would like to highlight several items regarding implementation, modelling and tuning know-how summayzed in the following list:
 
 - Multimodal has helped us:
     - Consolidate knowledge around Vision
