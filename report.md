@@ -16,11 +16,11 @@ Final Project for the UPC [Artificial Intelligence with Deep Learning Postgradua
 4. [General Architecture](#architecture)
 5. [Preliminary Tests](#preliminary)
     1. [Initial models](#initial)
-    2. [Tuning the vision channel](#vision)
-        1. [Model baseline with ResNet](#baseline)
+    2. [Model baseline with ResNet](#visionbaseline)
     3. [Is the model actually learning something?](#learning)
     4. [How important is to train only classifier vs train also vision?](#important)
     5. [Classifier Architecture](#classifier)
+    6. [Training results visualization](#resultvisualization)    
 6. [Splitting the model](#splitting)
 7. [Final Tests](#final)
     1. [Baseline Model on the 100k Dataset](#guse)
@@ -66,8 +66,9 @@ One of our earliests decissions was to discard Tensor Flow in favour of **Pytorc
 **Google Colab** became quickly our preferred environment due to its easy of use, allowing us to combine text,code and graphics in a single document. The possibility of using GPUs became quickly a must as the size of the datasets got bigger.
 In order to get shared access to our datasets, we stored them in a shared **Google Drive** folder wich could be conveniently connected to Google Colab backend using the `google.colab` module. After working this way for a while, we discovered that using OS access Colab possibilities (`!command`) to copy the dataset to the Colab's machine local disk was better in terms of performance.
 
-<p align="center"><img src="images/pytorch.png" width="300"></p>
-<p align="center"><img src="images/collab.jpg" width="300"></p>
+<p ><img src="images/pytorch.png" width="200"> <img src="images/collab.jpg" width="200"> <img src="images/tensorboard.png" width="200"> <img src="images/gdrive.png" width="200"></p>
+
+
 
 <p align="right"><a href="#toc">To top</a></p>
 
@@ -151,13 +152,9 @@ Accuracy peaked close to 65% which is also belo expectations as it is only 15 po
 
 This model's code can be found [here](model-colabs/Model100.ipynb).
 
-<p align="right"><a href="#toc">To top</a></p>
 
-## Tuning the vision channel <a name="vision"></a>
+## Model baseline with Resnet <a name="visionbaseline"></a>
 
-<p align="right"><a href="#toc">To top</a></p>
-
-### Model baseline with Resnet <a name="baseline"></a>
 As part of the intial research on the Vision channel we started considering the alternatives that we could have to VGG:
 ![](images/VisionAlternatives.png)
 
@@ -254,7 +251,21 @@ For this experiment we have used our models 1.b & 1.c and Datasets A and C
 
 As we can see this multilayer approach with progressive reduction of the number of features in the the input to the output it's increasing the accuracy of the model.
 
-<p align="right"><a href="#toc">To top</a></p>
+
+## Training results visualization <a name="resultsvisualization"></a>
+During the project we have been evolving on the tools that we have used to visualize results.
+
+First we have started with printing basic information
+* Training Epoch-Batch-J-Image-Loss-timages-rightanswers-baccuracy-AcumAccuracy-lr
+    0 299 0 7500 2.554795742034912 7500 2158.0 0.3199999928474426 0.28773333333333334 [0.003]
+* *** Model Test Accuracy: 0.296
+
+As the project was advancing we started to include plots
+
+![](images/model-0100-metrics.png)
+
+Finally we moved to use Tensorboard in order to use one of the most common tools for metrics visualization/analysis
+![](images/tensorboardfirstplot.png)
 
 # Splitting the model <a name="splitting"></a>
 We realised a bigger dataset would be the best cure for our model's overfit and might bump up the metrics but the training was getting considerably long (ie. 100 minutes for 7,500 samples and 30 epochs) and after many long trainings we were sometimes banned to use Google Colab with GPU for some hours. In a Computer Vision lab we learned the trick of precalculating the image embeddings once and reuse them during the training process.
