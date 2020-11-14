@@ -172,7 +172,8 @@ Experiment Results:
 |1.e | RESNET18 (512), concat 1024, 1024->4096->1024->n Classes Batchnorm, dropout|34%|33.4%|34%|
 |1.f | RESNET50 (2048), concat 2560, 2560->4096->1024->n Classes Batchnorm, dropout|33.6%|33.68|36.4%|
 
-![](images/resnet18vsresnet50.png)
+<p align="center"><img src="images/resnet18vsresnet50.png" width="600"></p>
+
 
 Looking at the results obtained and the ones that we had when using first models based on VGG we got the intuition that the model that was using RESNET was getting better accuracy speacilly when the dataset was bigger however at this point of the research we coudln't yet confirm it as the models were having other differences. This is going to become a new hypothesis to be validated with additional tests.
 
@@ -182,7 +183,8 @@ At some point of the research we were having doubts about if the model was actua
 We came back to check what where the results of the models participating in VQA challenges. 
 VQA organization is doing challenges every year and you could find the results on the 'Challenge' option of the menu and then click on 'Leaderboards'. For instace the results for 2016 are in You could find in https://visualqa.org/challenge_2016.html. We have been using these results as our model was starting from the architecture proposed on their paper from 2015.
 
-![](images/VQAOpenEndedChallengeLeaderboard2016.png)
+<p align="center"><img src="images/VQAOpenEndedChallengeLeaderboard2016.png" width="600"></p>
+
 
 Comparing our 36.4% with Dataset D and the results of this table and bearing in mind our hypothesis that a larger dataset would help us to increase we got the intuition that we were going in the right direction and we could accept that the model was learning properly.
 
@@ -212,7 +214,8 @@ For this experiment we have used again our model 1.f and build the variants 1.fB
 
 We perfom the evaluation of these 3 models for the datasets D & E and see below the results:
 
-![](images/ResnetTrainvsFrozen.png)
+<p align="center"><img src="images/ResnetTrainvsFrozen.png" width="600"></p>
+
 
 These results seem to confirm that training the vision channel with the classifier better accuracy results in validation can be achieved.
 
@@ -230,7 +233,7 @@ For this experiment we have used our models 1.b & 1.c and Datasets A and C
 |1.b | RESNET18 (512), pointwise 512, 512->4096->n Classes|
 |1.c | RESNET18 (512), pointwise 512, 512->4096->1024->n Classes|
 
-![](images/AddFClayer.png)
+<p align="center"><img src="images/AddFClayer.png" width="600"></p>
 
 As we can see this multilayer approach with progressive reduction of the number of features in the the input to the output it's increasing the accuracy of the model.
 
