@@ -1,4 +1,4 @@
-# Visual Question Answering 
+# Visual Question Answering
 
 Final Project for the UPC [Artificial Intelligence with Deep Learning Postgraduate Course](https://www.talent.upc.edu/cat/estudis/formacio/curs/310401/postgrau-artificial-intelligence-deep-learning/) 2020.
 
