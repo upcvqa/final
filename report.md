@@ -344,3 +344,6 @@ These results are obtained from the testing dataset (# samples) after training t
 - Add attention to the language branch but using the image embedding
 - Enrich image information with object detection/object segmentation info
 - Train Vision in addition to classifier
+
+# Sources:
+* [Understanding Learning Rate (towardsdatascience.com)](https://towardsdatascience.com/https-medium-com-dashingaditya-rakhecha-understanding-learning-rate-dd5da26bb6de)
