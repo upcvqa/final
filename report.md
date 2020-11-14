@@ -1,10 +1,42 @@
-# VQA 
+
+# Visual Question Answering 
+
+Final Project for the UPC [Artificial Intelligence with Deep Learning Postgraduate Course](https://www.talent.upc.edu/cat/estudis/formacio/curs/310401/postgrau-artificial-intelligence-deep-learning/) 2020.
+
 * Authors: Rafael Garcia, Bernat Joseph, Pau Gil, Jordi Suñer
 * Team Advisor: Issey Masuda
-* November 2020
+* Date: November 2020
+
+## Table of Contents
+
+1. [Introduction](#intro)
+    1. Motivation
+    2. Proposal
+    3. Milestones
+2. [Working environment](#working_env)
+3. [Models](#models)
+    1. Initial models
+    2. Model variations
+    3. Tuning the vision channel
+        1. Model baseline with Resnet
+    4. Is the model actually learning something?
+    5. How important is to train only classifier vs train also vision?
+    6. Classifier Architecture
+    7. Splitting the model
+    8. Training with 100k dataset
+    9. Tweaking the language channel
+        1. [Learning the question embedding: introducing LSTM](#lstm)
+        2. glove+lstm
+4. [Result analysis](#results)
+    1. Accuracies by question type (*best accuracies excluding yes/no questions*)
+    2. Accuracies by question type (*worst accuracies excluding yes/no questions*)
+    3. Interesting data
+    4. Interesting samples
+5. [Learnings](#learning)
+6. [Next steps](#next_steps)
 
 
-# Introduction
+# Introduction <a name="intro"></a>
 Visual Question Answering (VQA) it's aiming to answer Free-form and open-ended Question about an Image, using Computer Vision & Language Processing
 
 ![VQA examples](https://visualqa.org/static/img/vqa_examples.jpg)
@@ -38,11 +70,11 @@ Choose a final model and analyze its results
 - Tuned models
 - Final model
 
-# Working environment
+# Working environment <a name="working_env"></a>
 One of our earliests decissions was to discard Tensor Flow in favour of **Pytorch**. We have had very few labs with Tensor Flow at that time and the learning curve for Pytorch seemed less steep.
 **Google Colab** became quickly our preferred environment due to its easy of use, allowing us to combine text,code and graphics in a single document. The possibility of using GPUs became quickly a must as the size of the datasets got bigger.
 In order to get shared access to our datasets, we stored them in a shared **Google Drive** folder wich could be conveniently connected to Google Colab backend using the `google.colab` module. After working this way for a while, we discovered that using OS access Colab possibilities (`!command`) to copy the dataset to the Colab's machine local disk was better in terms of performance.
-# Models
+# Models <a name="models"></a>
 Our models are based on the best performing one from paper [VQA: Visual Question Answering](https://arxiv.org/pdf/1505.00468.pdf):
 ![](images/paper-model.png)
 
@@ -196,13 +228,13 @@ On the down size, precalculating the image embeddings prevents from finetuning t
 ## Training with 100k dataset
 - Results
 ## Tweaking the language channel
-### Learning the question embedding: introducing LSTM
+### Learning the question embedding: introducing LSTM <a name="lstm"></a>
 
 As the course advanced we felt ready for the full implementation of one of the models from the VQA paper of 2015 including the question embedding. This embedding consists of two layers: the first one is a simle look-up table embedding for the words appearing in the training set, the second one is an LSTM layer. The final question embedding is obtained by concatenating the las hidden state and the last cell state of the LSTM output.
 
 ![](images/model-0400.PNG)
 
-The goal of this implemetation was to determine wether including the question embedding as a trainable part of the network wolud result into a better accuracy. Following the same rationale of the previous experiments regarding the pre-trained image classification network, a Res-Net50 version of the model has also been tested. 
+The goal of this implemetation was to determine wether including the question embedding as a trainable part of the network wolud result into a better accuracy. Following the same rationale of the previous experiments regarding the pre-trained image classification network two versions of this model were implemented: one based on the paper with a VGG16 network for the image branch, and another with a ResNet50 nwtwork for the image branch. 
 
 A first implementation showed results similar to those obtained with the GUSE embedding used in the previous models, with test accuracies in the 35%-40% range (see the table at the end of this section for details). In this case the original paper choice for a VGG16 network results in an +5% accuracy increase with respect to the ResNet50 version. Loss curves show a clear overfitting case with the loss of the test set starting to increase after a few training epochs.
 
@@ -234,7 +266,7 @@ The inclusion of a word embedding plus LSTM for the qustion embedding did not sh
 
 ### glove+lstm
 GloVe word embeddings + double layer bidirectional lstm
-# Result analysis
+# Result analysis <a name="results"></a>
 These results are obtained from the testing dataset (# samples) after training the xxxx model for xxx epochs with xxxx samples (training) and yyyy samples (validation)
 ## Accuracies by question type (*best accuracies excluding yes/no questions*)
 
@@ -284,7 +316,7 @@ In many how-many questions, the right answer is the second most probable answer 
 
 -- Ocluded individuals in how-many questions
 - Interpretation
-# Learnings
+# Learnings <a name="learning"></a>
 - Multimodal has helps us:
     - Consolidate knowledge around Vision
     - Consolidate knowledge around NLP
@@ -310,9 +342,12 @@ In many how-many questions, the right answer is the second most probable answer 
   - Learn and progress by defining hypothesis, run experiments and extract conclusions and new hypothesis.
 
 
-# Next steps
+# Next steps <a name="next_steps"></a>
 - Use image embedding as initial context for the LSTM 
 - Add attention to the language branch
 - Add attention to the language branch but using the image embedding
 - Enrich image information with object detection/object segmentation info
 - Train Vision in addition to classifier
+
+# Sources:
+* [Understanding Learning Rate (towardsdatascience.com)](https://towardsdatascience.com/https-medium-com-dashingaditya-rakhecha-understanding-learning-rate-dd5da26bb6de)
