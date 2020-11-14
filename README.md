@@ -429,10 +429,10 @@ We've built a sample visualizer using `matplotlib`and while playing with it we f
 Sample on the left is a fail but a nice one: the model does not give the right answer (`butt`). The vision channel seems to have taking control and identified the whose butts are these (`elephant`). Sample on the right is a hit and also a nice one as the correct answer (`horse`) is well hidden in the background, behind the shiny Harley.
 
 <p float="left">
-  <img src="images/c1.jpeg" width="225" />
-  <img src="images/c2.jpeg" width="225" />
-  <img src="images/c3.jpeg" width="225" />
-  <img src="images/c4.jpeg" width="225" />
+  <img src="images/c1.jpeg" width="200" />
+  <img src="images/c2.jpeg" width="200" />
+  <img src="images/c3.jpeg" width="200" />
+  <img src="images/c4.jpeg" width="200" />
 </p>
 
 
