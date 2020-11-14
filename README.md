@@ -68,8 +68,6 @@ In order to get shared access to our datasets, we stored them in a shared **Goog
 
 <p ><img src="images/pytorch.png" width="200"> <img src="images/collab.jpg" width="200"> <img src="images/tensorboard.png" width="200"> <img src="images/gdrive.png" width="200"></p>
 
-
-
 <p align="right"><a href="#toc">To top</a></p>
 
 # Data Sets <a name="datasets"></a>
@@ -114,9 +112,6 @@ Choose a final model and analyze its results
 <p align="right"><a href="#toc">To top</a></p>
 
 # Preliminary Tests <a name="preliminary"></a>
-
-<p align="right"><a href="#toc">To top</a></p>
-
 ## Initial models <a name="initial"></a>
 The best performing model from the paper used a pretrained  **vgg-16** for the vision piece and a 2 layer LSTM for the language channel. As we haven't gone through the NLP part of course at that time and, in order to have a complete working model as soon as possible, we decided to keep the original vision piece but go for pretrained embeddings for the whole question. Looking for a suitable model and after discarding the word oriented alternatives (Glove, Word2Vec), we found Google's [Universal Sentence Encoder](https://static.googleusercontent.com/media/research.google.com/ca//pubs/archive/46808.pdf). It provides 512 dim encodings for a sentence(question) and there is a Tensor Flow based [implementation](https://tfhub.dev/google/universal-sentence-encoder/4). After checking it worked fine from Google Colab and it did not collide with the rest of our Pytorch code, we used it to build our first model:
 
@@ -152,6 +147,7 @@ Accuracy peaked close to 65% which is also belo expectations as it is only 15 po
 
 This model's code can be found [here](model-colabs/Model100.ipynb).
 
+<p align="right"><a href="#toc">To top</a></p>
 
 ## Model baseline with Resnet <a name="visionbaseline"></a>
 
@@ -305,7 +301,7 @@ As the course advanced we felt ready for the full implementation of one of the m
 
 ![](images/model-0400.PNG)
 
-The goal of this implemetation was to determine wether including the question embedding as a trainable part of the network wolud result into a better accuracy. Following the same rationale of the previous experiments regarding the pre-trained image classification network two versions of this model were implemented: one based on the paper with a VGG16 network for the image branch, and another with a ResNet50 nwtwork for the image branch. 
+The goal of this implemetation was to determine wether including the question embedding as a trainable part of the network wolud result into a better accuracy. Following the same rationale of the previous experiments regarding the pre-trained image classification network two versions of this model were implemented: one based on the paper implementation with a VGG16 network for the image branch ([see Collab notebook here](model-colabs/Original_VQA2015_VGG.ipynb)), and another with a ResNet50 network for the image branch ([see Collab notebook here](model-colabs/Original_VQA2015_ResNet.ipynb)). 
 
 A first implementation showed results similar to those obtained with the GUSE embedding used in the previous models, with test accuracies in the 35%-40% range (see the table at the end of this section for details). In this case the original paper choice for a VGG16 network results in an +5% accuracy increase with respect to the ResNet50 version. Loss curves show a clear overfitting case with the loss of the test set starting to increase after a few training epochs.
 
@@ -317,7 +313,10 @@ In an attempt to improve these results several improvements were applied to the 
 - Tanh activation was removed after the word embedding
 - All other Tanh activations were replaced by ReLU activations
 - Hidden LSTM states were restarted at each batch
-- Dropouts were removed
+- BatchNorm added in the classifier
+- Dropout removed in the classifier
+
+The correspondig Collab notebooks of the implementation can be found [here for the VGG16 version](model-colabs/Improved_VQA2015_VGG.ipynb) and [here for the ResNet50 version](model-colabs/Improved_VQA2015_ResNet.ipynb).
 
 After these improvements test accuracies for the VGG16 did not show any relevant improvement. However, the ResNet50 version of the implementation showed a +7% accuracy increase resulting in the best-performing model of this experiment. In both cases, it can be noticed that the improved networks are able to learn way faster, reaching accuracies in the training set around the 80% mark after only 20 epochs, while the original models did not even reach 70% after 100 epochs. The test accuracies, however are again in the same range as that of other model trained with the same dataset. Loss curves show the same behaviour as the one obtained with the original model.
 
