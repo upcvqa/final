@@ -20,7 +20,7 @@ Final Project for the UPC [Artificial Intelligence with Deep Learning Postgradua
     3. [Is the model actually learning something?](#learning)
     4. [How important is to train only classifier vs train also vision?](#important)
     5. [Classifier Architecture](#classifier)
-    6. [Training results visualization](#resultvisualization)    
+    6. [Training results visualization](#resultsvisualization)    
 6. [Splitting the model](#splitting)
 7. [Final Tests](#final)
     1. [Baseline Model on the 100k Dataset](#guse)
@@ -262,6 +262,8 @@ As the project was advancing we started to include plots
 
 Finally we moved to use Tensorboard in order to use one of the most common tools for metrics visualization/analysis
 ![](images/tensorboardfirstplot.png)
+
+<p align="right"><a href="#toc">To top</a></p>
 
 # Splitting the model <a name="splitting"></a>
 We realised a bigger dataset would be the best cure for our model's overfit and might bump up the metrics but the training was getting considerably long (ie. 100 minutes for 7,500 samples and 30 epochs) and after many long trainings we were sometimes banned to use Google Colab with GPU for some hours. In a Computer Vision lab we learned the trick of precalculating the image embeddings once and reuse them during the training process.
