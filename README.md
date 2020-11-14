@@ -336,13 +336,15 @@ The inclusion of a word embedding plus LSTM for the qustion embedding did not sh
 <p align="right"><a href="#toc">To top</a></p>
 
 ### GloVe + LSTM <a name="glove"></a>
-We realised the datasets' size we were using were too small to produce good word embeddings and decided to use pre-trained word embeddings instead. GloVe word embeddings was our selection of choice.
+We realised the datasets' sizes we were using were too small to produce good word embeddings and decided to use pre-trained word embeddings instead. GloVe word embeddings was our selection of choice.
 
 ![](images/model-0500.png)
 
-Additionally, we made the lstm double layered and bidirectional. Double layer to get closer to the original paper's model and bidirectional because we had the intuition that there weren't that many questions' begins (How much, How many, Is, Are, What) and the reverse lstm might be able to capture better the question tail, more variable and probably critical to choose the right answer.
+Additionally, we made the lstm double layered and bidirectional. Double layer to get closer to the original paper's model and bidirectional because we had the intuition that there weren't that many diferent questions' begins (How much, How many, Is, Are, What) and the reverse lstm might be able to capture better the question tail, more variable and probably critical to choose the right answer. Concatenating the 512 dim of the four hidden states (# layers * # directions) the resulting embedding is 2048 dim.
 
 ![](images/model-0500-metrics.png)
+
+Accuracy peaked at 44.4%, beating the model with lstm but not the model with GUSE (47.1%). This confirms that the quality of pretrained embeddings (either word or sentence) which have been obtained by processing very large corpus (ie. Wikipedia or Google Books) is superior to the ones trained only using the questions, even they are more specific by concentrating on a limited vocabulary. 
 
 <p align="right"><a href="#toc">To top</a></p>
 
@@ -360,7 +362,7 @@ Additionally, we made the lstm double layered and bidirectional. Double layer to
 <p align="right"><a href="#toc">To top</a></p>
 
 # Result analysis <a name="results"></a>
-These results are obtained from the testing dataset (# samples) after training the xxxx model for xxx epochs with xxxx samples (training) and yyyy samples (validation)
+Some statistics from test (24,302 samples) after training the VGG16 Glove + LSTM model with the largest dataset (91,134 training + 6,076 validation). 
 
 <p align="right"><a href="#toc">To top</a></p>
 
@@ -408,17 +410,24 @@ These results are obtained from the testing dataset (# samples) after training t
 
 ## Interesting samples <a name="interestingsamples"></a>
 
+We've built a sample visualizer using `matplotlib`and while playing with it we found some interesting results:
+
 <p float="left">
   <img src="images/butts.jpg" width="400" />
   <img src="images/harley.jpg" width="400" /> 
 </p>
 
-Sample on the left is a fail but a nice one: the model does not give the right answer (`butt`). The vision channel seems to have taking control and identified the whose butts are these (`elefant`). Sample on the right is a hit and also a nice one as the correct answer (`horse`) is well hidden in the background, behind the shiny Harley.
+Sample on the left is a fail but a nice one: the model does not give the right answer (`butt`). The vision channel seems to have taking control and identified the whose butts are these (`elephant`). Sample on the right is a hit and also a nice one as the correct answer (`horse`) is well hidden in the background, behind the shiny Harley.
+
+<p float="left">
+  <img src="images/c1.jpeg" width="225" />
+  <img src="images/c2.jpeg" width="225" />
+  <img src="images/c3.jpeg" width="225" />
+  <img src="images/c4.jpeg" width="225" />
+</p>
+
 
 In many how-many questions, the right answer is the second most probable answer while the most probable answer given by the model is the number of individuals which can be clearly identified (not ocluded). 
-
--- Ocluded individuals in how-many questions
-- Interpretation
 
 <p align="right"><a href="#toc">To top</a></p>
 
