@@ -364,6 +364,15 @@ Accuracy peaked at 44.4%, beating the model with lstm but not the model with GUS
 # Result analysis <a name="results"></a>
 Some statistics from test (24,302 samples) after training the VGG16 Glove + LSTM model with the largest dataset (91,134 training + 6,076 validation). 
 
+Accuracy according to 'answer_type':
+
+| Type | # ques | hits | % | top 5 | % |
+|:---- | ------: | ------: | :-----: | -------: | :-----: |
+| yes/no  | 9,113  | 5,916 | 64.9%  | 9,099 | 99.8% |
+| number  | 3,007    | 819 | 27.2%  | 2,061 | 68.5% |
+| other | 12,182  | 3,868 | 31.8%  | 6,793 | 55.8% |
+| Total | 24,302 | 10,603 | 43.6% | 17,953 | 73.9% |
+    
 <p align="right"><a href="#toc">To top</a></p>
 
 ## Accuracies by question type (*best accuracies excluding yes/no questions*) <a name="best"></a>
