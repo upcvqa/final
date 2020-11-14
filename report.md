@@ -13,7 +13,8 @@ Final Project for the UPC [Artificial Intelligence with Deep Learning Postgradua
     2. Proposal
     3. Milestones
 2. [Working environment](#working_env)
-3. [Models](#models)
+3. [Data Sets](#datasets)
+4. [Models](#models)
     1. Initial models
     2. Model variations
     3. Tuning the vision channel
@@ -21,18 +22,19 @@ Final Project for the UPC [Artificial Intelligence with Deep Learning Postgradua
     4. Is the model actually learning something?
     5. How important is to train only classifier vs train also vision?
     6. Classifier Architecture
-    7. Splitting the model
+    7. [plitting the model](#splitting)
     8. Training with 100k dataset
     9. Tweaking the language channel
         1. [Learning the question embedding: introducing LSTM](#lstm)
         2. glove+lstm
-4. [Result analysis](#results)
+5. [Result analysis](#results)
     1. Accuracies by question type (*best accuracies excluding yes/no questions*)
     2. Accuracies by question type (*worst accuracies excluding yes/no questions*)
     3. Interesting data
     4. Interesting samples
-5. [Learnings](#learning)
-6. [Next steps](#next_steps)
+6. [Learnings](#learning)
+7. [Next steps](#next_steps)
+8. [References](#references)
 
 
 # Introduction <a name="intro"></a>
@@ -73,6 +75,29 @@ Choose a final model and analyze its results
 One of our earliests decissions was to discard Tensor Flow in favour of **Pytorch**. We have had very few labs with Tensor Flow at that time and the learning curve for Pytorch seemed less steep.
 **Google Colab** became quickly our preferred environment due to its easy of use, allowing us to combine text,code and graphics in a single document. The possibility of using GPUs became quickly a must as the size of the datasets got bigger.
 In order to get shared access to our datasets, we stored them in a shared **Google Drive** folder wich could be conveniently connected to Google Colab backend using the `google.colab` module. After working this way for a while, we discovered that using OS access Colab possibilities (`!command`) to copy the dataset to the Colab's machine local disk was better in terms of performance.
+
+<p align="center"><img src="images/pytorch.png" width="300"></p>
+<p align="center"><img src="images/collab.jpg" width="300"></p>
+
+# Data Sets <a name="datasets"></a>
+During the project several datasets for the different experiments were creted. Out of the ~100K images of the test dataset of the VQA 2015 paper the following datasets were created:
+| Name 	| # image-question-answer triplets 	| Answer Type 	|
+|:-:	|:--------------------------------:	|:-----------:	|
+| A 	|               0.1k                |  Number 1-20 	|
+| B 	|                1k                	|  Number 1-20 	|
+| C 	|                5k               	|  Number 1-20 	|
+| D 	|                10k               	|  Number 1-20 	|
+| E 	|                10k               	|    Yes/No   	|
+
+Finally, after preliminary tests were performed a final dataset was created by passing 100k images thrugh the corresponding image networks (VGG16 and ResNet50) to obtain Pytorch tensor datasets that allow for faster training on a such a big dataset:
+
+| Name  | # image tensor-question-answer triplets 	| Answer Type 	|
+|:-:	|:--------------------------------:	|:-----------:	|
+| 100k 	|                100k               |    Open      	|
+
+Details on the procedure can be found in section [Splitting the model](#splitting).
+
+
 # Models <a name="models"></a>
 Our models are based on the best performing one from paper [VQA: Visual Question Answering](https://arxiv.org/pdf/1505.00468.pdf):
 ![](images/paper-model.png)
@@ -213,7 +238,7 @@ For this experiment we have used our models 1.b & 1.c and Datasets A and C
 
 As we can see this multilayer approach with progressive reduction of the number of features in the the input to the output it's increasing the accuracy of the model.
 
-## Splitting the model
+## Splitting the model <a name="splitting"></a>
 We realised a bigger dataset would be the best cure for our model's overfit and might bump up the metrics but the training was getting considerably long (ie. 100 minutes for 7,500 samples and 30 epochs) and after many long trainings we were sometimes banned to use Google Colab with GPU for some hours. In a Computer Vision lab we learned the trick of precalculating the image embeddings once and reuse them during the training process.
 To implement it, we splitted the model in 2:
 ![](images/model-split.png)
@@ -345,5 +370,5 @@ These results are obtained from the testing dataset (# samples) after training t
 - Enrich image information with object detection/object segmentation info
 - Train Vision in addition to classifier
 
-# Sources:
+# References <a name="references"></a>
 * [Understanding Learning Rate (towardsdatascience.com)](https://towardsdatascience.com/https-medium-com-dashingaditya-rakhecha-understanding-learning-rate-dd5da26bb6de)
