@@ -1,3 +1,4 @@
+
 # Visual Question Answering 
 
 Final Project for the UPC [Artificial Intelligence with Deep Learning Postgraduate Course](https://www.talent.upc.edu/cat/estudis/formacio/curs/310401/postgrau-artificial-intelligence-deep-learning/) 2020.
@@ -305,11 +306,14 @@ These results are obtained from the testing dataset (# samples) after training t
 ## Interesting samples
 
 <p float="left">
-  <img src="images/elephant-butt.PNG" width="450" />
-  <img src="images/3-elephants.PNG" width="450" /> 
+  <img src="images/butts.jpg" width="450" />
+  <img src="images/harley.jpg" width="450" /> 
 </p>
 
--- Elephant butt
+Sample on the left is a fail but a nice one: the model does not give the right answer (`butt`). The vision channel seems to have taking control and identified the whose butts are these (`elefant`). Sample on the right is a hit and also a nice one as the correct answer (`horse`) is well hidden in the background, behind the shiny Harley.
+
+In many how-many questions, the right answer is the second most probable answer while the most probable answer given by the model is the number of individuals which can be clearly identified (not ocluded). 
+
 -- Ocluded individuals in how-many questions
 - Interpretation
 # Learnings <a name="learning"></a>
