@@ -1,5 +1,4 @@
-
-# Visual Question Answering 
+# Visual Question Answering
 
 Final Project for the UPC [Artificial Intelligence with Deep Learning Postgraduate Course](https://www.talent.upc.edu/cat/estudis/formacio/curs/310401/postgrau-artificial-intelligence-deep-learning/) 2020.
 
@@ -10,39 +9,40 @@ Final Project for the UPC [Artificial Intelligence with Deep Learning Postgradua
 ## Table of Contents
 
 1. [Introduction](#intro)
-    1. Motivation
-    2. Proposal
-    3. Milestones
-2. [Working environment](#working_env)
+    1. [Motivation](#motivation)
+    2. [Milestones](#milestones)
+2. [Working Environment](#working_env)
 3. [Data Sets](#datasets)
-4. [Models](#models)
-    1. Initial models
-    2. Model variations
-    3. Tuning the vision channel
-        1. Model baseline with Resnet
-    4. Is the model actually learning something?
-    5. How important is to train only classifier vs train also vision?
-    6. Classifier Architecture
-    7. [plitting the model](#splitting)
-    8. Training with 100k dataset
-    9. Tweaking the language channel
-        1. [Learning the question embedding: introducing LSTM](#lstm)
-        2. glove+lstm
-5. [Result analysis](#results)
-    1. Accuracies by question type (*best accuracies excluding yes/no questions*)
-    2. Accuracies by question type (*worst accuracies excluding yes/no questions*)
-    3. Interesting data
-    4. Interesting samples
-6. [Learnings](#learning)
-7. [Next steps](#next_steps)
-8. [References](#references)
+4. [General Architecture](#architecture)
+5. [Preliminary Tests](#preliminary)
+    1. [Initial models](#initial)
+    2. [Tuning the vision channel](#vision)
+        1. [Model baseline with ResNet](#baseline)
+    3. [Is the model actually learning something?](#learning)
+    4. [How important is to train only classifier vs train also vision?](#important)
+    5. [Classifier Architecture](#classifier)
+6. [Splitting the model](#splitting)
+7. [Final Tests](#final)
+    1. [Baseline Model on the 100k Dataset](#guse)
+    2. [Training the Question Channel](#question)
+        1. [Word Embedding + LSTM](#lstm)
+        2. [GloVe LSTM](#glove)
+     3. [Results Summary](#resultssummary)
+8. [Result analysis](#results)
+    1. [Accuracies by question type (*best accuracies excluding yes/no questions*)](#best)
+    2. [Accuracies by question type (*worst accuracies excluding yes/no questions*)](#worst)
+    3. [Interesting data](#interestingdata)
+    4. [Interesting samples](#interestingsamples)
+9. [Learnings](#learning)
+10. [Next steps](#next_steps)
+11. [References](#references)
 
 
 # Introduction <a name="intro"></a>
 Visual Question Answering (VQA) it's aiming to answer Free-form and open-ended Question about an Image, using Computer Vision & Language Processing
 
 ![VQA examples](https://visualqa.org/static/img/vqa_examples.jpg)
-## Motivation
+## Motivation <a name="motivation"></a>
 We have decided this project because we considered that being able to answer a question from an image using AI it's 'cool' and, more importantly, it is a project that due to the multimodal approach requires that you must understand two of the most important disciplines in AI-DL: vision and language processing.
 
 In addition it's an area relatively new.  (2014 - Papers 2015) with plenty of opportunities for improvement and several possible business applications: 
@@ -51,25 +51,10 @@ In addition it's an area relatively new.  (2014 - Papers 2015) with plenty of op
 * Intelligence Analysis
 * support visually impaired individuals
 
-## Proposal
-
-There are several ways to address VQA and this project has been based on VQA 2015 paper: https://arxiv.org/pdf/1612.00837.pdf
-
-Our proposal is use the paper model as a base and introduce variations in the composing elements:
-
-![](images/model-puzle.png)
-
-- using a different (newer) model for vision
-- using a different strategy for the language channel
-- using different embedding combination operations
-- other variations (ie. replace tanh by relu as non linearity)
-
-Implement base and tuned models and check their metrics
-Choose a final model and analyze its results
-
-## Milestones
-- Base model
-- Tuned models
+## Milestones <a name="milestones"></a>
+- Build a base model
+- Discuss possible model improvements
+- Tune/Improve base model
 - Final model
 
 # Working environment <a name="working_env"></a>
@@ -98,15 +83,28 @@ Finally, after preliminary tests were performed a final dataset was created by p
 
 Details on the procedure can be found in section [Splitting the model](#splitting).
 
-
-# Models <a name="models"></a>
+# General Architecture <a name="architecture"></a>
 Our models are based on the best performing one from paper [VQA: Visual Question Answering](https://arxiv.org/pdf/1505.00468.pdf):
 ![](images/paper-model.png)
 
 The model had two branches: one for vision (image) and one for language (question). For the language branch, several alternatives were mentioned, all of them involved training the question embeddings. At least two different ways of combining the information from both channels were also tested.
 With all this variants, a more general approach to the model can be seen as a framework with interchangeable pieces.
 
-## Initial models
+Our proposal is to use the paper model as a base and introduce variations in the composing elements:
+
+![](images/model-puzle.png)
+
+- Using a different (newer) model for vision
+- Using a different strategy for the language channel
+- Using different embedding combination operations
+- Other variations (ie. replace tanh by relu as non linearity)
+
+Implement base and tuned models and check their metrics
+Choose a final model and analyze its results
+
+# Preliminary Tests <a name="preliminary"></a>
+
+## Initial models <a name="initial"></a>
 The best performing model from the paper used a pretrained  **vgg-16** for the vision piece and a 2 layer LSTM for the language channel. As we haven't gone through the NLP part of course at that time and, in order to have a complete working model as soon as possible, we decided to keep the original vision piece but go for pretrained embeddings for the whole question. Looking for a suitable model and after discarding the word oriented alternatives (Glove, Word2Vec), we found Google's [Universal Sentence Encoder](https://static.googleusercontent.com/media/research.google.com/ca//pubs/archive/46808.pdf). It provides 512 dim encodings for a sentence(question) and there is a Tensor Flow based [implementation](https://tfhub.dev/google/universal-sentence-encoder/4). After checking it worked fine from Google Colab and it did not collide with the rest of our Pytorch code, we used it to build our first model:
 
 ![](images/model-0100.png)
@@ -141,12 +139,8 @@ Accuracy peaked close to 65% which is also belo expectations as it is only 15 po
 
 This model's code can be found [here](model-colabs/Model100.ipynb).
 
-## Model variations
-- Changes in the classifier
-- Concat vs pointwise
-- Other variations
-## Tuning the vision channel
-### Model baseline with Resnet
+## Tuning the vision channel <a name="vision"></a>
+### Model baseline with Resnet <a name="baseline"></a>
 
 As part of the intial research on the Vision channel we started considering the alternatives that we could have to VGG:
 ![](images/VisionAlternatives.png)
@@ -177,17 +171,19 @@ Experiment Results:
 |1.e | RESNET18 (512), concat 1024, 1024->4096->1024->n Classes Batchnorm, dropout|34%|33.4%|34%|
 |1.f | RESNET50 (2048), concat 2560, 2560->4096->1024->n Classes Batchnorm, dropout|33.6%|33.68|36.4%|
 
-![](images/resnet18vsresnet50.png)
+<p align="center"><img src="images/resnet18vsresnet50.png" width="600"></p>
+
 
 Looking at the results obtained and the ones that we had when using first models based on VGG we got the intuition that the model that was using RESNET was getting better accuracy speacilly when the dataset was bigger however at this point of the research we coudln't yet confirm it as the models were having other differences. This is going to become a new hypothesis to be validated with additional tests.
 
-## Is the model actually learning something?
+## Is the model actually learning something? <a name="learning"></a>
 At some point of the research we were having doubts about if the model was actually learning as much as it could learn although the losses were indicating that it was learning. The main reason for this concern it's also because in just a few epoch the model stopped increasing accuracy in validation.
 
 We came back to check what where the results of the models participating in VQA challenges. 
 VQA organization is doing challenges every year and you could find the results on the 'Challenge' option of the menu and then click on 'Leaderboards'. For instace the results for 2016 are in You could find in https://visualqa.org/challenge_2016.html. We have been using these results as our model was starting from the architecture proposed on their paper from 2015.
 
-![](images/VQAOpenEndedChallengeLeaderboard2016.png)
+<p align="center"><img src="images/VQAOpenEndedChallengeLeaderboard2016.png" width="600"></p>
+
 
 Comparing our 36.4% with Dataset D and the results of this table and bearing in mind our hypothesis that a larger dataset would help us to increase we got the intuition that we were going in the right direction and we could accept that the model was learning properly.
 
@@ -204,7 +200,7 @@ See below the results in a similar format than the one used for VQA organization
 
 Based on these results we got confidence with our model and make us focus about how we could scale to train with larger datasets.
 
-## How important is to train only classifier vs train also vision?
+## How important is to train only classifier vs train also vision? <a name="important"></a>
 As we were looking for options to scale the training but using the same infrastructure we decided to investigate if training also the vison channel was delivering better results. Overall the idea was that if it is not bring better results to train together classifier and vision channel then we could process the images embeddings before the training so the performance and resource consumption will be lower during training.
 
 For this experiment we have used again our model 1.f and build the variants 1.fB and 1.fC as described below:
@@ -217,11 +213,12 @@ For this experiment we have used again our model 1.f and build the variants 1.fB
 
 We perfom the evaluation of these 3 models for the datasets D & E and see below the results:
 
-![](images/ResnetTrainvsFrozen.png)
+<p align="center"><img src="images/ResnetTrainvsFrozen.png" width="600"></p>
+
 
 These results seem to confirm that training the vision channel with the classifier better accuracy results in validation can be achieved.
 
-## Classifier Architecture
+## Classifier Architecture <a name="classifier"></a>
 At the initial stages of the projects we started with a simple classifier that was taking as input the information from Vision and Langugage channels and reducing it directly to the number of classes that we had to predict for that dataset.
 After a few tests we got the intuition than the size of the layers and also the number of layers in addition to techniques like dropout and batchnorm could help us to increase.
 
@@ -235,11 +232,11 @@ For this experiment we have used our models 1.b & 1.c and Datasets A and C
 |1.b | RESNET18 (512), pointwise 512, 512->4096->n Classes|
 |1.c | RESNET18 (512), pointwise 512, 512->4096->1024->n Classes|
 
-![](images/AddFClayer.png)
+<p align="center"><img src="images/AddFClayer.png" width="600"></p>
 
 As we can see this multilayer approach with progressive reduction of the number of features in the the input to the output it's increasing the accuracy of the model.
 
-## Splitting the model <a name="splitting"></a>
+# Splitting the model <a name="splitting"></a>
 We realised a bigger dataset would be the best cure for our model's overfit and might bump up the metrics but the training was getting considerably long (ie. 100 minutes for 7,500 samples and 30 epochs) and after many long trainings we were sometimes banned to use Google Colab with GPU for some hours. In a Computer Vision lab we learned the trick of precalculating the image embeddings once and reuse them during the training process.
 To implement it, we splitted the model in 2:
 ![](images/model-split.png)
@@ -250,10 +247,22 @@ This change really bumped up the overall performance increasing the throughput f
 
 On the down size, precalculating the image embeddings prevents from finetuning the vision model (include it in the training (all or part of it,usually the final layers) so it adapts to our images.
 
-## Training with 100k dataset
-- Results
-## Tweaking the language channel
-### Learning the question embedding: introducing LSTM <a name="lstm"></a>
+## Final Tests <a name="final"></a>
+In this section we focus on the results obtained with the 100k dataset. After prliminary tests, the following variations of the models have bbeen choosen for final comparison and analysis:
+
+|      Name      	    | Image Channel 	|    Question Channel   	|
+|:--------------:	    |:-------------:	|:---------------------:	|
+|   VGG16 GUSE   	    |     VGG16     	|          GUSE         	|
+|  ResNet50 GUSE 	    |    ResNet50   	|          GUSE         	|
+|   VGG16 WE + LSTM   	|     VGG16     	| Word Embedding + LSTM 	|
+|  ResNet50 WE + LSTM 	|    ResNet50   	| Word Embedding+ LSTM  	|
+|   VGG16 Glove + LSTM 	|     VGG16     	|      GloVe + LSTM     	|
+| ResNet50 Glove + LSTM	|    ResNet50   	|      GloVe + LSTM     	|
+
+## Baseline Model on the 100k Dataset <a name="guse"></a>
+
+## Training the Question Channel <a name="question"></a>
+### Word Embedding + LSTM <a name="lstm"></a>
 
 As the course advanced we felt ready for the full implementation of one of the models from the VQA paper of 2015 including the question embedding. This embedding consists of two layers: the first one is a simle look-up table embedding for the words appearing in the training set, the second one is an LSTM layer. The final question embedding is obtained by concatenating the las hidden state and the last cell state of the LSTM output.
 
@@ -280,20 +289,33 @@ After these improvements test accuracies for the VGG16 did not show any relevant
 
 The following table summarizes the results obtained in these experiments:
 
-|                   	| Maximum Test Accuracy 	| Maximum Mean  Train Accuracy 	|
-|:-----------------:	|:---------------------:	|:----------------------------:	|
-|   Original VGG16  	|         40.60%        	|            71.90%            	|
-| Original Resnet50 	|         35.10%        	|            61.87%            	|
-|   Improved VGG16  	|         41.90%        	|            86.23%            	|
-| Improved Resnet50 	|         42.00%        	|            85.83%            	|
+|                   	        | Maximum Test Accuracy 	| Maximum Mean  Train Accuracy 	|
+|:-----------------:	        |:---------------------:	|:----------------------------:	|
+|   Original VGG16 WE + LSTM  	|         40.60%        	|            71.90%            	|
+| Original Resnet50 WE + LSTM 	|         35.10%        	|            61.87%            	|
+|   Improved VGG16 WE + LSTM 	|         41.90%        	|            86.23%            	|
+| Improved Resnet50 WE + LSTM 	|         42.00%        	|            85.83%            	|
 
 The inclusion of a word embedding plus LSTM for the qustion embedding did not show relevant improvements to the overall accuracy compared to pre-trained embeddings. The similar accuracies obtained with all differnt tested architechtures suggests that no further accuracy increase can be reached using the current dataset. The imporved models that have shown a faster learning capacity would be nice candidates for a test with a larger dataset.
 
-### glove+lstm
+### GloVe + LSTM <a name="glove"></a>
 GloVe word embeddings + double layer bidirectional lstm
+
+## Results Summary <a name="resultssummary"></a>
+
+|             	        | Maximum Test Accuracy 	| Maximum Mean  Train Accuracy 	|
+|:-----------------:    |:---------------------:	|:----------------------------:	|
+|   VGG16 GUSE   	    |         00.00%        	|            00.00%            	|
+|  ResNet50 GUSE 	    |         00.00%        	|            00.00%            	|
+|   VGG16 WE + LSTM   	|         41.90%        	|            86.23%            	|
+|  ResNet50 WE + LSTM 	|         42.00%        	|            85.83%            	|
+|   VGG16 Glove + LSTM 	|         00.00%        	|            00.00%            	|
+| ResNet50 Glove + LSTM	|         00.00%        	|            00.00%            	|
+
 # Result analysis <a name="results"></a>
 These results are obtained from the testing dataset (# samples) after training the xxxx model for xxx epochs with xxxx samples (training) and yyyy samples (validation)
-## Accuracies by question type (*best accuracies excluding yes/no questions*)
+
+## Accuracies by question type (*best accuracies excluding yes/no questions*) <a name="best"></a>
 
 | Question type |  # questions  |  Hits  | % T1 |  Hits top 5  | % T5 |	
 | --------- |  ---------:  |  ---------:  | :---------: |  ---------:  | :---------: |
@@ -311,7 +333,7 @@ These results are obtained from the testing dataset (# samples) after training t
 | what animal is            | 102 | 62 | 60,8% | 80 | 78,4% | 
 | is the                    | 1969 | 1185 | 60,2% | 1900 | 96,5% | 
 
-## Accuracies by question type (*worst accuracies excluding yes/no questions*)
+## Accuracies by question type (*worst accuracies excluding yes/no questions*) <a name="worst"></a>
 
 | Question type |  # questions  |  Hits  | % T1 |  Hits top 5  | % T5 |	
 | --------- |  ---------:  |  ---------:  | :---------: |  ---------:  | :---------: |
@@ -327,8 +349,8 @@ These results are obtained from the testing dataset (# samples) after training t
 | what number is            | 74 | 3 | 4,1% | 8 | 10,8% | 
 
 
-## Interesting data
-## Interesting samples
+## Interesting data <a name="interestingdata"></a>
+## Interesting samples <a name="interestingsamples"></a>
 
 <p float="left">
   <img src="images/butts.jpg" width="450" />
