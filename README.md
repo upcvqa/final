@@ -36,7 +36,7 @@ Final Project for the UPC [Artificial Intelligence with Deep Learning Postgradua
 9. [Conclusions and Lessons Learned](#conclusions)
 10. [Next steps](#next_steps)
 11. [References](#references)
-
+12. [Additional samples](#samples)
 
 # Introduction <a name="intro"></a>
 Visual Question Answering (VQA) it's aiming to answer Free-form and open-ended Question about an Image, using Computer Vision & Language Processing
@@ -167,11 +167,6 @@ So the experiment was looking to understand:
 Based on this we have selected the following: 
 - resnet-18 (embedding size: 512)
 - resnet-50 (embedding size: 2048)
-
-|RESNET| Output Features |
-|------|----------------
-|RESNET18|512|
-|RESNET50|2048|
 
 Experiment Results:
 
@@ -475,12 +470,12 @@ Focusing on the lessons learned during the project besides the particular resuts
 
 <p align="right"><a href="#toc">To top</a></p>
 
-# Additional samples
+# Additional samples <a name="samples"></a>
 
 Legend:
-  green dot  : hit
-  orange dot : top 5 hit
-  red dot    : miss
+- green dot  : hit
+- orange dot : top 5 hit
+- red dot    : miss
 
 <p float="left">
   <img src="samples/100680.jpg" width="266" />
