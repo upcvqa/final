@@ -247,7 +247,7 @@ This change really bumped up the overall performance increasing the throughput f
 
 On the down size, precalculating the image embeddings prevents from finetuning the vision model (include it in the training (all or part of it,usually the final layers) so it adapts to our images.
 
-## Final Tests <a name="final"></a>
+# Final Tests <a name="final"></a>
 In this section we focus on the results obtained with the 100k dataset. After prliminary tests, the following variations of the models have bbeen choosen for final comparison and analysis:
 
 |      Name      	    | Image Channel 	|    Question Channel   	|
