@@ -247,6 +247,8 @@ For this experiment we have used our models 1.b & 1.c and Datasets A and C
 
 As we can see this multilayer approach with progressive reduction of the number of features in the the input to the output it's increasing the accuracy of the model.
 
+Finally, mimicking the original model, we set up a fixed 1000 classes classifier output. Class 999 was assigned to answers out of the 1000 most frequent answers list. This class was ignored in the loss and accuracy calculations.
+
 
 ## Training results visualization <a name="resultsvisualization"></a>
 During the project we have been evolving on the tools that we have used to visualize results.
@@ -339,7 +341,13 @@ The inclusion of a word embedding plus LSTM for the qustion embedding did not sh
 <p align="right"><a href="#toc">To top</a></p>
 
 ### GloVe + LSTM <a name="glove"></a>
-GloVe word embeddings + double layer bidirectional lstm
+We realised the datasets' size we were using were too small to produce good word embeddings and decided to use pre-trained word embeddings instead. GloVe word embeddings was our selection of choice.
+
+![](images/model-0500.png)
+
+Additionally, we made the lstm double layered and bidirectional. Double layer to get closer to the original paper's model and bidirectional because we had the intuition that there weren't that many questions' begins (How much, How many, Is, Are, What) and the reverse lstm might be able to capture better the question tail, more variable and probably critical to choose the right answer.
+
+![](images/model-0500-metrics.png)
 
 <p align="right"><a href="#toc">To top</a></p>
 
@@ -347,11 +355,11 @@ GloVe word embeddings + double layer bidirectional lstm
 
 |             	        | Maximum Test Accuracy 	| Maximum Mean  Train Accuracy 	|
 |:-----------------:    |:---------------------:	|:----------------------------:	|
-|   VGG16 GUSE   	    |         00.00%        	|            00.00%            	|
-|  ResNet50 GUSE 	    |         00.00%        	|            00.00%            	|
+|   VGG16 GUSE   	    |         **47.10%**       	|            79.42%            	|
+|  ResNet50 GUSE 	    |         44.00%        	|            60.25%            	|
 |   VGG16 WE + LSTM   	|         41.90%        	|            86.23%            	|
 |  ResNet50 WE + LSTM 	|         42.00%        	|            85.83%            	|
-|   VGG16 Glove + LSTM 	|         00.00%        	|            00.00%            	|
+|   VGG16 Glove + LSTM 	|         44.40%        	|            80.20%            	|
 | ResNet50 Glove + LSTM	|         00.00%        	|            00.00%            	|
 
 <p align="right"><a href="#toc">To top</a></p>
@@ -466,3 +474,61 @@ Focusing on the lessons learned during the project besides the particular resuts
 * [Understanding Learning Rate (towardsdatascience.com)](https://towardsdatascience.com/https-medium-com-dashingaditya-rakhecha-understanding-learning-rate-dd5da26bb6de)
 
 <p align="right"><a href="#toc">To top</a></p>
+
+# Additional samples
+
+Legend:
+  green dot  : hit
+  orange dot : top 5 hit
+  red dot    : miss
+
+<p float="left">
+  <img src="samples/100680.jpg" width="266" />
+  <img src="samples/100769.jpg" width="266" />
+  <img src="samples/101687.jpg" width="266" />
+</p>
+<p float="left">
+  <img src="samples/102959.jpg" width="266" />
+  <img src="samples/105469.jpg" width="266" />
+  <img src="samples/105691.jpg" width="266" />
+</p>
+<p float="left">
+  <img src="samples/106646.jpg" width="266" />
+  <img src="samples/106879.jpg" width="266" />
+  <img src="samples/107787.jpg" width="266" />
+</p>
+<p float="left">
+  <img src="samples/108389.jpg" width="266" />
+  <img src="samples/108732.jpg" width="266" />
+  <img src="samples/109170.jpg" width="266" />
+</p>
+<p float="left">
+  <img src="samples/109813.jpg" width="266" />
+  <img src="samples/110805.jpg" width="266" />
+  <img src="samples/111233.jpg" width="266" />
+</p>
+<p float="left">
+  <img src="samples/111702.jpg" width="266" />
+  <img src="samples/112326.jpg" width="266" />
+  <img src="samples/112963.jpg" width="266" />
+</p>
+<p float="left">
+  <img src="samples/113290.jpg" width="266" />
+  <img src="samples/113374.jpg" width="266" />
+  <img src="samples/113534.jpg" width="266" />
+</p>
+<p float="left">
+  <img src="samples/114430.jpg" width="266" />
+  <img src="samples/115258.jpg" width="266" />
+  <img src="samples/116777.jpg" width="266" />
+</p>
+<p float="left">
+  <img src="samples/117551.jpg" width="266" />
+  <img src="samples/119678.jpg" width="266" />
+  <img src="samples/97592.jpg" width="266" />
+</p>
+<p float="left">
+  <img src="samples/99198.jpg" width="266" />
+  <img src="samples/99523.jpg" width="266" />
+  <img src="samples/99528.jpg" width="266" />
+</p>
