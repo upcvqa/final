@@ -142,8 +142,8 @@ Accuracy peaked close to 65% which is also belo expectations as it is only 15 po
 | ----------- | ----------- |
 | Throughput | 24.8 samples/s |
 | Epochs | 20 |
-| Accuracy (train) | 24.8% |
-| Accuracy (validation) | 79.8% |
+| Accuracy (train) | 79.8% |
+| Accuracy (validation) | 24.8% |
 
 This model's code can be found [here](model-colabs/Model100.ipynb).
 
@@ -406,8 +406,8 @@ These results are obtained from the testing dataset (# samples) after training t
 ## Interesting samples <a name="interestingsamples"></a>
 
 <p float="left">
-  <img src="images/butts.jpg" width="450" />
-  <img src="images/harley.jpg" width="450" /> 
+  <img src="images/butts.jpg" width="400" />
+  <img src="images/harley.jpg" width="400" /> 
 </p>
 
 Sample on the left is a fail but a nice one: the model does not give the right answer (`butt`). The vision channel seems to have taking control and identified the whose butts are these (`elefant`). Sample on the right is a hit and also a nice one as the correct answer (`horse`) is well hidden in the background, behind the shiny Harley.
