@@ -6,7 +6,7 @@ Final Project for the UPC [Artificial Intelligence with Deep Learning Postgradua
 * Team Advisor: Issey Masuda
 * Date: November 2020
 
-## Table of Contents
+## Table of Contents <a name="toc"></a>
 
 1. [Introduction](#intro)
     1. [Motivation](#motivation)
@@ -40,8 +40,8 @@ Final Project for the UPC [Artificial Intelligence with Deep Learning Postgradua
 
 # Introduction <a name="intro"></a>
 Visual Question Answering (VQA) it's aiming to answer Free-form and open-ended Question about an Image, using Computer Vision & Language Processing
-
 ![VQA examples](https://visualqa.org/static/img/vqa_examples.jpg)
+
 ## Motivation <a name="motivation"></a>
 We have decided this project because we considered that being able to answer a question from an image using AI it's 'cool' and, more importantly, it is a project that due to the multimodal approach requires that you must understand two of the most important disciplines in AI-DL: vision and language processing.
 
@@ -51,11 +51,15 @@ In addition it's an area relatively new.  (2014 - Papers 2015) with plenty of op
 * Intelligence Analysis
 * support visually impaired individuals
 
+<p align="right"><a href="#toc">To top</a></p>
+
 ## Milestones <a name="milestones"></a>
 - Build a base model
 - Discuss possible model improvements
 - Tune/Improve base model
 - Final model
+
+<p align="right"><a href="#toc">To top</a></p>
 
 # Working environment <a name="working_env"></a>
 One of our earliests decissions was to discard Tensor Flow in favour of **Pytorch**. We have had very few labs with Tensor Flow at that time and the learning curve for Pytorch seemed less steep.
@@ -65,6 +69,8 @@ In order to get shared access to our datasets, we stored them in a shared **Goog
 <p ><img src="images/pytorch.png" width="200"> <img src="images/collab.jpg" width="200"> <img src="images/tensorboard.png" width="200"> <img src="images/gdrive.png" width="200"></p>
 
 
+
+<p align="right"><a href="#toc">To top</a></p>
 
 # Data Sets <a name="datasets"></a>
 During the project several datasets for the different experiments were creted. Out of the ~100K images of the test dataset of the VQA 2015 paper the following datasets were created:
@@ -83,6 +89,8 @@ Finally, after preliminary tests were performed a final dataset was created by p
 | 100k 	|                100k               |    Open      	|
 
 Details on the procedure can be found in section [Splitting the model](#splitting).
+
+<p align="right"><a href="#toc">To top</a></p>
 
 # General Architecture <a name="architecture"></a>
 Our models are based on the best performing one from paper [VQA: Visual Question Answering](https://arxiv.org/pdf/1505.00468.pdf):
@@ -103,7 +111,11 @@ Our proposal is to use the paper model as a base and introduce variations in the
 Implement base and tuned models and check their metrics
 Choose a final model and analyze its results
 
+<p align="right"><a href="#toc">To top</a></p>
+
 # Preliminary Tests <a name="preliminary"></a>
+
+<p align="right"><a href="#toc">To top</a></p>
 
 ## Initial models <a name="initial"></a>
 The best performing model from the paper used a pretrained  **vgg-16** for the vision piece and a 2 layer LSTM for the language channel. As we haven't gone through the NLP part of course at that time and, in order to have a complete working model as soon as possible, we decided to keep the original vision piece but go for pretrained embeddings for the whole question. Looking for a suitable model and after discarding the word oriented alternatives (Glove, Word2Vec), we found Google's [Universal Sentence Encoder](https://static.googleusercontent.com/media/research.google.com/ca//pubs/archive/46808.pdf). It provides 512 dim encodings for a sentence(question) and there is a Tensor Flow based [implementation](https://tfhub.dev/google/universal-sentence-encoder/4). After checking it worked fine from Google Colab and it did not collide with the rest of our Pytorch code, we used it to build our first model:
@@ -174,8 +186,9 @@ Experiment Results:
 
 <p align="center"><img src="images/resnet18vsresnet50.png" width="600"></p>
 
-
 Looking at the results obtained and the ones that we had when using first models based on VGG we got the intuition that the model that was using RESNET was getting better accuracy speacilly when the dataset was bigger however at this point of the research we coudln't yet confirm it as the models were having other differences. This is going to become a new hypothesis to be validated with additional tests.
+
+<p align="right"><a href="#toc">To top</a></p>
 
 ## Is the model actually learning something? <a name="learning"></a>
 At some point of the research we were having doubts about if the model was actually learning as much as it could learn although the losses were indicating that it was learning. The main reason for this concern it's also because in just a few epoch the model stopped increasing accuracy in validation.
@@ -185,11 +198,9 @@ VQA organization is doing challenges every year and you could find the results o
 
 <p align="center"><img src="images/VQAOpenEndedChallengeLeaderboard2016.png" width="600"></p>
 
-
 Comparing our 36.4% with Dataset D and the results of this table and bearing in mind our hypothesis that a larger dataset would help us to increase we got the intuition that we were going in the right direction and we could accept that the model was learning properly.
 
 In order to perform an extra validation we decided then to focus on the 'Yes/No' type of question as we were doing the assumption that creating a dataset only focusing on answering (Yes/No) will be acting as a larger dataset as we'll have on this case thousands (10K) of images but just for 2 classes.
-
 
 So the new experiment consisted on creating a new 10K dataset with questions where the answer only could be "Yes/No".
 For this experiment we used the model 1.f introduced before.
@@ -200,6 +211,8 @@ See below the results in a similar format than the one used for VQA organization
 |1.f|36.4%|68%|52.2%|
 
 Based on these results we got confidence with our model and make us focus about how we could scale to train with larger datasets.
+
+<p align="right"><a href="#toc">To top</a></p>
 
 ## How important is to train only classifier vs train also vision? <a name="important"></a>
 As we were looking for options to scale the training but using the same infrastructure we decided to investigate if training also the vison channel was delivering better results. Overall the idea was that if it is not bring better results to train together classifier and vision channel then we could process the images embeddings before the training so the performance and resource consumption will be lower during training.
@@ -216,8 +229,9 @@ We perfom the evaluation of these 3 models for the datasets D & E and see below 
 
 <p align="center"><img src="images/ResnetTrainvsFrozen.png" width="600"></p>
 
-
 These results seem to confirm that training the vision channel with the classifier better accuracy results in validation can be achieved.
+
+<p align="right"><a href="#toc">To top</a></p>
 
 ## Classifier Architecture <a name="classifier"></a>
 At the initial stages of the projects we started with a simple classifier that was taking as input the information from Vision and Langugage channels and reducing it directly to the number of classes that we had to predict for that dataset.
@@ -236,6 +250,7 @@ For this experiment we have used our models 1.b & 1.c and Datasets A and C
 <p align="center"><img src="images/AddFClayer.png" width="600"></p>
 
 As we can see this multilayer approach with progressive reduction of the number of features in the the input to the output it's increasing the accuracy of the model.
+
 
 ## Training results visualization <a name="resultsvisualization"></a>
 During the project we have been evolving on the tools that we have used to visualize results.
@@ -263,6 +278,8 @@ This change really bumped up the overall performance increasing the throughput f
 
 On the down size, precalculating the image embeddings prevents from finetuning the vision model (include it in the training (all or part of it,usually the final layers) so it adapts to our images.
 
+<p align="right"><a href="#toc">To top</a></p>
+
 # Final Tests <a name="final"></a>
 In this section we focus on the results obtained with the 100k dataset. After prliminary tests, the following variations of the models have bbeen choosen for final comparison and analysis:
 
@@ -275,7 +292,11 @@ In this section we focus on the results obtained with the 100k dataset. After pr
 |   VGG16 Glove + LSTM 	|     VGG16     	|      GloVe + LSTM     	|
 | ResNet50 Glove + LSTM	|    ResNet50   	|      GloVe + LSTM     	|
 
+<p align="right"><a href="#toc">To top</a></p>
+
 ## Baseline Model on the 100k Dataset <a name="guse"></a>
+
+<p align="right"><a href="#toc">To top</a></p>
 
 ## Training the Question Channel <a name="question"></a>
 ### Word Embedding + LSTM <a name="lstm"></a>
@@ -314,8 +335,12 @@ The following table summarizes the results obtained in these experiments:
 
 The inclusion of a word embedding plus LSTM for the qustion embedding did not show relevant improvements to the overall accuracy compared to pre-trained embeddings. The similar accuracies obtained with all differnt tested architechtures suggests that no further accuracy increase can be reached using the current dataset. The imporved models that have shown a faster learning capacity would be nice candidates for a test with a larger dataset.
 
+<p align="right"><a href="#toc">To top</a></p>
+
 ### GloVe + LSTM <a name="glove"></a>
 GloVe word embeddings + double layer bidirectional lstm
+
+<p align="right"><a href="#toc">To top</a></p>
 
 ## Results Summary <a name="resultssummary"></a>
 
@@ -328,8 +353,12 @@ GloVe word embeddings + double layer bidirectional lstm
 |   VGG16 Glove + LSTM 	|         00.00%        	|            00.00%            	|
 | ResNet50 Glove + LSTM	|         00.00%        	|            00.00%            	|
 
+<p align="right"><a href="#toc">To top</a></p>
+
 # Result analysis <a name="results"></a>
 These results are obtained from the testing dataset (# samples) after training the xxxx model for xxx epochs with xxxx samples (training) and yyyy samples (validation)
+
+<p align="right"><a href="#toc">To top</a></p>
 
 ## Accuracies by question type (*best accuracies excluding yes/no questions*) <a name="best"></a>
 
@@ -349,6 +378,8 @@ These results are obtained from the testing dataset (# samples) after training t
 | what animal is            | 102 | 62 | 60,8% | 80 | 78,4% | 
 | is the                    | 1969 | 1185 | 60,2% | 1900 | 96,5% | 
 
+<p align="right"><a href="#toc">To top</a></p>
+
 ## Accuracies by question type (*worst accuracies excluding yes/no questions*) <a name="worst"></a>
 
 | Question type |  # questions  |  Hits  | % T1 |  Hits top 5  | % T5 |	
@@ -365,7 +396,12 @@ These results are obtained from the testing dataset (# samples) after training t
 | what number is            | 74 | 3 | 4,1% | 8 | 10,8% | 
 
 
+<p align="right"><a href="#toc">To top</a></p>
+
 ## Interesting data <a name="interestingdata"></a>
+
+<p align="right"><a href="#toc">To top</a></p>
+
 ## Interesting samples <a name="interestingsamples"></a>
 
 <p float="left">
@@ -379,6 +415,9 @@ In many how-many questions, the right answer is the second most probable answer 
 
 -- Ocluded individuals in how-many questions
 - Interpretation
+
+<p align="right"><a href="#toc">To top</a></p>
+
 # Learnings <a name="learning"></a>
 - Multimodal has helps us:
     - Consolidate knowledge around Vision
@@ -404,6 +443,7 @@ In many how-many questions, the right answer is the second most probable answer 
 - General:
   - Learn and progress by defining hypothesis, run experiments and extract conclusions and new hypothesis.
 
+<p align="right"><a href="#toc">To top</a></p>
 
 # Next steps <a name="next_steps"></a>
 - Use image embedding as initial context for the LSTM 
@@ -412,5 +452,9 @@ In many how-many questions, the right answer is the second most probable answer 
 - Enrich image information with object detection/object segmentation info
 - Train Vision in addition to classifier
 
+<p align="right"><a href="#toc">To top</a></p>
+
 # References <a name="references"></a>
 * [Understanding Learning Rate (towardsdatascience.com)](https://towardsdatascience.com/https-medium-com-dashingaditya-rakhecha-understanding-learning-rate-dd5da26bb6de)
+
+<p align="right"><a href="#toc">To top</a></p>
