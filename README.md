@@ -33,7 +33,7 @@ Final Project for the UPC [Artificial Intelligence with Deep Learning Postgradua
     2. [Accuracies by question type (*worst accuracies excluding yes/no questions*)](#worst)
     3. [Interesting data](#interestingdata)
     4. [Interesting samples](#interestingsamples)
-9. [Learnings](#learning)
+9. [Conclusions and Lessons Learned](#conclusions)
 10. [Next steps](#next_steps)
 11. [References](#references)
 
@@ -417,21 +417,28 @@ In many how-many questions, the right answer is the second most probable answer 
 
 <p align="right"><a href="#toc">To top</a></p>
 
-# Learnings <a name="learning"></a>
-- Multimodal has helps us:
+# Conclusions and Lessons Learned <a name="conclusions"></a>
+
+Preliminary tests showed that out of the several decisions to be made based on the experiments, only increasing the dataset size had a real impact on the final accuracy results. These results showed that a "bigger" ResNet model could slightly imporve the accracy, as also could using deepr classifiers or training the image network. The first two options could easily be transferred to the 100k dataset provided that the image embeddings were pre-computed and the image network remained frozen. It could not have been possible to work with such a big dataset and training the full network end to end, including the image branch, with the available computational resources. Therefore, we decided to favor the option of increasing the datset size at the expense of givig up training the image branch.
+
+Final test with the 100k databease, however, showed that the different models attained similar accuracy results. This fact suggests that such accuracies could already be the best to be obtained with the 100k dataset and that further improvement would not come from improving the models' architecture, depth or tuning, but by increasing again the dataset size.
+
+Focusing on the lessons learned during the project besides the particular resuts obtained with each model, we would like to highlight several implementation, tuning and know-hows summayzed in the following list:
+
+- Multimodal has helped us:
     - Consolidate knowledge around Vision
     - Consolidate knowledge around NLP
     - Learn different possibilities about how to combine the results of different networks (e.g.: pointwise, concat, Before a dot product, normalize the vectors)
 - Dataset:
   - Dataset size is critical - The bigger the better
-  - Class balance
-  - Performance increase based on pre-calculated embeddings
+  - Class balance is very relevant
+  - Performance increase based on pre-computed embeddings
 - Classifier:
   - Augmentation Layer, Multilayer FC feature reduction (funnel), Dropout, Batchnorm
 - Vision:
   - VGG, Resnet
 - Language:
-  -Google sentence encoder, Glove, Own encoders
+  - Google sentence encoder, Glove, Own encoders
 - Train:
   - Loss, train accuracy and validation accuracy plots interpretation
   - How to combine Batch size, lr and lr schedulers
