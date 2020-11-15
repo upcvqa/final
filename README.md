@@ -256,7 +256,7 @@ As the project was advancing we started to include plots
 
 ![](images/model-0100-metrics.png)
 
-Finally we moved to use Tensorboard in order to use one of the most common tools for metrics visualization/analysis
+Finally we have also explored how to use Tensorboard in order to learn about one of the most common tools for metrics visualization/analysis
 ![](images/tensorboardfirstplot.png)
 
 <p align="right"><a href="#toc">To top</a></p>
