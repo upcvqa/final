@@ -70,7 +70,19 @@ In order to get shared access to our datasets, we stored them in a shared **Goog
 <p align="right"><a href="#toc">To top</a></p>
 
 # Data Sets <a name="datasets"></a>
-During the project several datasets for the different experiments were creted. Out of the >200K image-question-answer triplets of the test dataset of the VQA 2015 paper the following datasets were created:
+
+The VQA Project website provides three datasets for training, evaluation and tests with the following features:
+|Data Set    | Images  | Questions |  Answers  |
+|:----------:|:-------:|:---------:|:---------:|
+| Train      |  82,783 |  443,757  | 4,437,570 |
+| Validation |  40,504 |  214,354  | 2,143,540 |
+| Test       |  81,434 |  447,793  |     -     |
+
+Notice that these figures include the multiple answer modality in which different possible answers with different accuracy scoring are provided for each question. Since these datasets are too big for the available computing resources of the project we have focused on the Validation dataset and the unique answer modality. Therfore the resulting dataset consists of 214,354 image-question-answer triplets, in which several question-answer pairs may refer to the same image. The following chars show the distribution of questions and answers according to its type:
+
+![](images/pies.png)
+
+During the project several smaller datasets for the different experiments were creted. Out of the >200K image-question-answer triplets of the test dataset of the VQA 2015 paper the following datasets were created:
 | Name 	| # image-question-answer triplets 	| Answer Type 	|
 |:-:	|:--------------------------------:	|:-----------:	|
 | A 	|               0.1k                |  Number 1-20 	|
