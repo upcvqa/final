@@ -31,8 +31,7 @@ Final Project for the UPC [Artificial Intelligence with Deep Learning Postgradua
 8. [Result analysis](#results)
     1. [Accuracies by question type (*best accuracies excluding yes/no questions*)](#best)
     2. [Accuracies by question type (*worst accuracies excluding yes/no questions*)](#worst)
-    3. [Interesting data](#interestingdata)
-    4. [Interesting samples](#interestingsamples)
+    3. [Interesting samples](#interestingsamples)
 9. [Conclusions and Lessons Learned](#conclusions)
 10. [Next steps](#next_steps)
 11. [References](#references)
@@ -341,10 +340,12 @@ We realised the datasets' sizes we were using were too small to produce good wor
 ![](images/model-0500.png)
 
 Additionally, we made the lstm double layered and bidirectional. Double layer to get closer to the original paper's model and bidirectional because we had the intuition that there weren't that many diferent questions' begins (How much, How many, Is, Are, What) and the reverse lstm might be able to capture better the question tail, more variable and probably critical to choose the right answer. Concatenating the 512 dim of the four hidden states (# layers * # directions) the resulting embedding is 2048 dim.
-
+- vgg-16
 ![](images/model-0500-metrics.png)
+- resnet-50
+![](images/model-0500-metrics-r50.png)
 
-Accuracy peaked at 44.4%, beating the model with lstm but not the model with GUSE (47.1%). This confirms that the quality of pretrained embeddings (either word or sentence) which have been obtained by processing very large corpus (ie. Wikipedia or Google Books) is superior to the ones trained only using the questions, even they are more specific by concentrating on a limited vocabulary. 
+Accuracy peaked at 44.4%, beating the model with lstm but not the model with GUSE (47.1%). This confirms that the quality of pretrained embeddings (either word or sentence) which have been obtained by processing very large corpus (ie. Wikipedia or Google Books) are superior to the ones trained only using the questions, even they are more specific by concentrating on a limited vocabulary. 
 
 <p align="right"><a href="#toc">To top</a></p>
 
@@ -357,7 +358,7 @@ Accuracy peaked at 44.4%, beating the model with lstm but not the model with GUS
 |   VGG16 WE + LSTM   	|         41.90%        	|            86.23%            	|
 |  ResNet50 WE + LSTM 	|         42.00%        	|            85.83%            	|
 |   VGG16 Glove + LSTM 	|         44.40%        	|            80.20%            	|
-| ResNet50 Glove + LSTM	|         00.00%        	|            00.00%            	|
+| ResNet50 Glove + LSTM	|         43.70%        	|            73.70%            	|
 
 <p align="right"><a href="#toc">To top</a></p>
 
@@ -413,10 +414,6 @@ Accuracy according to 'answer_type':
 
 <p align="right"><a href="#toc">To top</a></p>
 
-## Interesting data <a name="interestingdata"></a>
-
-<p align="right"><a href="#toc">To top</a></p>
-
 ## Interesting samples <a name="interestingsamples"></a>
 
 We've built a sample visualizer using `matplotlib`and while playing with it we found some interesting results:
@@ -426,7 +423,7 @@ We've built a sample visualizer using `matplotlib`and while playing with it we f
   <img src="images/harley.jpg" width="400" /> 
 </p>
 
-Sample on the left is a fail but a nice one: the model does not give the right answer (`butt`). The vision channel seems to have taking control and identified the whose butts are these (`elephant`). Sample on the right is a hit and also a nice one as the correct answer (`horse`) is well hidden in the background, behind the shiny Harley.
+Sample on the left is a fail but a nice one: the model does not give the right answer (`butt`) but the vision channel seems to have taken control and identified whose butts are these (`elephant`). Sample on the right is a hit and also a nice one as the correct answer (`horse`) is well hidden in the background, behind the shiny Harley.
 
 <p float="left">
   <img src="images/c1.jpeg" width="200" />
@@ -435,9 +432,8 @@ Sample on the left is a fail but a nice one: the model does not give the right a
   <img src="images/c4.jpeg" width="200" />
 </p>
 
-
-In many how-many questions, the right answer is the second most probable answer while the most probable answer given by the model is the number of individuals which can be clearly identified (not ocluded). 
-
+ In many how-many questions, the right answer is the second most probable answer while the most probable answer given by the model is the number of individuals which can be clearly identified (not ocluded).
+ 
 <p align="right"><a href="#toc">To top</a></p>
 
 # Conclusions and Lessons Learned <a name="conclusions"></a>
