@@ -514,6 +514,9 @@ Focusing on the lessons learned during the project besides the particular resuts
 
 # References <a name="references"></a>
 * [Understanding Learning Rate (towardsdatascience.com)](https://towardsdatascience.com/https-medium-com-dashingaditya-rakhecha-understanding-learning-rate-dd5da26bb6de)
+* [The Current Best of Universal Word Embeddings and Sentence Embeddings](https://medium.com/huggingface/universal-word-sentence-embeddings-ce48ddc8fc3a)
+* [Understanding Bidirectional RNN in PyTorch | by Ceshine Lee | Towards Data Science](https://towardsdatascience.com/understanding-bidirectional-rnn-in-pytorch-5bd25a5dd66)
+* [CS 230 - Recurrent Neural Networks Cheatsheet](https://stanford.edu/~shervine/teaching/cs-230/cheatsheet-recurrent-neural-networks)
 
 <p align="right"><a href="#toc">To top</a></p>
 
