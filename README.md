@@ -289,6 +289,14 @@ In this section we focus on the results obtained with the 100k dataset. After pr
 <p align="right"><a href="#toc">To top</a></p>
 
 ## Baseline Model on the 100k Dataset <a name="guse"></a>
+We splitted the base line model and gave it a try over the 100k dataset:
+- vgg-16
+![](images/vgg-guse-metrics.png)
+- resnet-50
+![](images/r50-guse-metrics.png)
+
+Accuracy is marginally higher vgg-16 vs resnet-50 but in both cases it is clearly superior to the accuracy obtained with smaller datasets (46.3% vs 25%).
+Viewing the plotted results, the model with resnet-50 seems to be less prone to overfitting. It might be related to its embedding size being half of the vgg-16 one (2048 vs 4096).
 
 <p align="right"><a href="#toc">To top</a></p>
 
@@ -423,7 +431,9 @@ We've built a sample visualizer using `matplotlib`and while playing with it we f
   <img src="images/harley.jpg" width="400" /> 
 </p>
 
-Sample on the left is a fail but a nice one: the model does not give the right answer (`butt`) but the vision channel seems to have taken control and identified whose butts are these (`elephant`). Sample on the right is a hit and also a nice one as the correct answer (`horse`) is well hidden in the background, behind the shiny Harley.
+Sample on the left is a fail but a nice one: the model does not give the right answer (`butt`) but the vision channel seems to have taken control and identified whose butts are these (`elephant`). We could also argue if this is really a miss as `trunk`-which is butt in slang- is the second most probable answer.
+
+Sample on the right is a hit and also a nice one as the correct answer (`horse`) is well hidden in the background, behind the shiny Harley.
 
 <p float="left">
   <img src="images/c1.jpeg" width="200" />
@@ -487,9 +497,9 @@ Focusing on the lessons learned during the project besides the particular resuts
 # Additional samples <a name="samples"></a>
 
 Legend:
-- green dot  : hit
-- orange dot : top 5 hit
-- red dot    : miss
+- green dot     : hit
+- orange dot    : top 5 hit
+- red dot       : miss
 
 <p float="left">
   <img src="samples/100680.jpg" width="266" />
