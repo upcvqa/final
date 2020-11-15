@@ -278,11 +278,13 @@ We realised a bigger dataset would be the best cure for our model's overfit and 
 To implement it, we splitted the model in 2:
 ![](images/model-split.png)
 
-First half uses our custom dataloader but instead of feeding the model, it stores the precalculated embeddings in lists (image and question). These two lists of tensors are then stored to disk using `torch.save`. Along with these two lists, a list with the annotations, a list index-to-annotation and a dictionary with additional information about the sample are also stored.
-Second half uses a `TensorDataset`to load the precalculated embeddings after retrieving the lists with `torch.load`and feeds them to the rest of the model (combination + classifier).
+First half (front end) uses our custom dataloader but instead of feeding the model, it only computes image and question embeddings and stores them in lists. These two lists of tensors are then stored to disk using `torch.save`. Along with these two lists, a list with the annotations, a list index-to-annotation and a dictionary with additional information about the sample are also stored.
+Second half (back end) uses a `TensorDataset`to load the precalculated embeddings after retrieving the lists with `torch.load`and feeds them to the rest of the model (combination + classifier).
 This change really bumped up the overall performance increasing the throughput from 50 samples/sec to 5,000 samples/sec. Additionally we've also been able to use batch sizes as big as 400 while before we were restricted to a maximum of 30. This improved performance allowed us to move from 10k to 100k datasets.
 
-On the down size, precalculating the image embeddings prevents from finetuning the vision model (include it in the training (all or part of it,usually the final layers) so it adapts to our images.
+On the down size, precalculating the image embeddings prevents from finetuning the vision model (train all or part of it,usually the final layers) so it adapts to our images.
+
+The frontend's Colab can be found [here](model-colabs/split_fend.ipynb)
 
 <p align="right"><a href="#toc">To top</a></p>
 
@@ -309,6 +311,8 @@ We splitted the base line model and gave it a try over the 100k dataset:
 
 Accuracy is marginally higher vgg-16 vs resnet-50 but in both cases it is clearly superior to the accuracy obtained with smaller datasets (46.3% vs 25%).
 Viewing the plotted results, the model with resnet-50 seems to be less prone to overfitting. It might be related to its embedding size being half of the vgg-16 one (2048 vs 4096).
+
+This backend's Colab can be found [here](model-colabs/split_bend_guse.ipynb)
 
 <p align="right"><a href="#toc">To top</a></p>
 
@@ -365,6 +369,8 @@ Additionally, we made the lstm double layered and bidirectional. Double layer to
 ![](images/model-0500-metrics-r50.png)
 
 Accuracy peaked at 44.4%, beating the model with lstm but not the model with GUSE (47.1%). This confirms that the quality of pretrained embeddings (either word or sentence) which have been obtained by processing very large corpus (ie. Wikipedia or Google Books) are superior to the ones trained only using the questions, even they are more specific by concentrating on a limited vocabulary. 
+
+This backend's Colab can be found [here](model-colabs/split_bend_glove.ipynb)
 
 <p align="right"><a href="#toc">To top</a></p>
 
@@ -437,7 +443,9 @@ Accuracy according to 'answer_type':
 
 ## Interesting samples <a name="interestingsamples"></a>
 
-We've built a sample visualizer using `matplotlib`and while playing with it we found some interesting results:
+We've built a sample visualizer using `matplotlib`. It displays the image adjusted in size (with the same transformation used to feed it to the model), the question and ground truth answer printed below. At the bottom, the top 5 most probable answers are printed using a heatmap colorized according its probability: from dark green (low) to bright yellow (high). This allows to check whether there was a clear winner or the decision was made by a small margin. Finally, a cloured dot on the top right allows for quick identification of hits (green), top 5 hits (orange) and misses (red). Code for the visualizer can be found in [this Colab](model-colabs/misc.ipynb)
+
+While playing with it we found some interesting results:
 
 <p float="left">
   <img src="images/butts.jpg" width="400" />
