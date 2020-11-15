@@ -44,11 +44,11 @@ Visual Question Answering (VQA) it's aiming to answer Free-form and open-ended Q
 ## Motivation <a name="motivation"></a>
 We have decided to do this project because we considered that being able to answer a question from an image using AI it's 'cool' and, more importantly, it is a project that due to the multimodal approach requires that you must understand two of the most important disciplines in AI-DL: vision and language processing.
 
-In addition it's an area relatively new.  (2014 - Papers 2015) with plenty of opportunities for improvement and several possible business applications: 
+In addition it's a relatively new area (papers from 2014, 2015, ...) with plenty of opportunities for improvement and several possible business applications: 
 * Image retrieval - Product search in digital catalogs (e.g: Amazon)
 * Human-computer interaction (e.g.: Ask to a camera the weather)
 * Intelligence Analysis
-* support visually impaired individuals
+* Support visually impaired individuals
 
 <p align="right"><a href="#toc">To top</a></p>
 
@@ -61,8 +61,10 @@ In addition it's an area relatively new.  (2014 - Papers 2015) with plenty of op
 <p align="right"><a href="#toc">To top</a></p>
 
 # Working environment <a name="working_env"></a>
-One of our earliests decissions was to discard Tensor Flow in favour of **Pytorch**. We have had very few labs with Tensor Flow at that time and the learning curve for Pytorch seemed less steep.
-**Google Colab** became quickly our preferred environment due to its easy of use, allowing us to combine text,code and graphics in a single document. The possibility of using GPUs became quickly a must as the size of the datasets got bigger.
+One of our earliests decisions was to discard Tensor Flow in favour of **Pytorch**. We have had very few labs with Tensor Flow at that time and the learning curve for Pytorch seemed less steep.
+
+**Google Colab** became quickly our preferred environment due to its ease of use, allowing us to combine text, code and graphics in a single document. The possibility of using GPUs became quickly a must as the size of the datasets got bigger.
+
 In order to get shared access to our datasets, we stored them in a shared **Google Drive** folder wich could be conveniently connected to Google Colab backend using the `google.colab` module. After working this way for a while, we discovered that using OS access Colab possibilities (`!command`) to copy the dataset to the Colab's machine local disk was better in terms of performance.
 
 <p ><img src="images/pytorch.png" width="200"> <img src="images/collab.jpg" width="200"> <img src="images/tensorboard.png" width="200"> <img src="images/gdrive.png" width="200"></p>
@@ -71,7 +73,7 @@ In order to get shared access to our datasets, we stored them in a shared **Goog
 
 # Data Sets <a name="datasets"></a>
 
-The VQA Project website provides three datasets for training, evaluation and tests with the following features:
+The [VQA Project website](https://visualqa.org/download.html) provides three datasets for training, evaluation and tests with the following features:
 |Data Set    | Images  | Questions |  Answers  |
 |:----------:|:-------:|:---------:|:---------:|
 | Train      |  82,783 |  443,757  | 4,437,570 |
@@ -82,7 +84,7 @@ Notice that these figures include the multiple answer modality in which differen
 
 ![](images/pies.png)
 
-During the project several smaller datasets for the different experiments were creted. Out of the >200K image-question-answer triplets of the test dataset of the VQA 2015 paper the following datasets were created:
+During the project several smaller datasets for the different experiments were creted. Out of the >200K image-question-answer triplets of the Validation dataset of the VQA 2015 paper the following datasets were created:
 | Name 	| # image-question-answer triplets 	| Answer Type 	|
 |:-:	|:--------------------------------:	|:-----------:	|
 | A 	|               0.1k                |  Number 1-20 	|
@@ -91,7 +93,7 @@ During the project several smaller datasets for the different experiments were c
 | D 	|                10k               	|  Number 1-20 	|
 | E 	|                10k               	|    Yes/No   	|
 
-Finally, after preliminary tests were performed a final dataset was created by passing 100k images thrugh the corresponding image networks (VGG16 and ResNet50) to obtain Pytorch tensor datasets that allow for faster training on a such a big dataset:
+Finally, after preliminary tests were performed a final dataset was created by passing 100k images through the corresponding image networks (VGG16 and ResNet50) to obtain Pytorch tensor datasets that allow for faster training on a such a big dataset:
 
 | Name  | # image tensor-question-answer triplets 	| Answer Type 	|
 |:-:	|:--------------------------------:	|:-----------:	|
@@ -102,13 +104,12 @@ Details on the procedure can be found in section [Splitting the model](#splittin
 <p align="right"><a href="#toc">To top</a></p>
 
 # General Architecture <a name="architecture"></a>
-Our models are based on the best performing one from paper [VQA: Visual Question Answering](https://arxiv.org/pdf/1505.00468.pdf):
+As mentioned above, our models are based on the models from paper [VQA: Visual Question Answering](https://arxiv.org/pdf/1505.00468.pdf):
 ![](images/paper-model.png)
 
-The model had two branches: one for vision (image) and one for language (question). For the language branch, several alternatives were mentioned, all of them involved training the question embeddings. At least two different ways of combining the information from both channels were also tested.
-With all this variants, a more general approach to the model can be seen as a framework with interchangeable pieces.
+These models had two branches: one for vision (image) and one for language (question). For the vision branch the paper proposes a **transfer learning approach** by using a pretrained VGG16 network cut at the last classifier layer. For the language branch, several alternatives were mentioned, all of them involving training the question embeddings. Finally, at least two different ways of combining the information from both channels were also tested.
 
-Our proposal is to use the paper model as a base and introduce variations in the composing elements:
+With all this variants, a more general approach to the model can be seen as a framework with interchangeable pieces. Our proposal is to use the paper model as a base and introduce variations in the composing elements:
 
 ![](images/model-puzle.png)
 
@@ -117,8 +118,7 @@ Our proposal is to use the paper model as a base and introduce variations in the
 - Using different embedding combination operations
 - Other variations (ie. replace tanh by relu as non linearity)
 
-Implement base and tuned models and check their metrics
-Choose a final model and analyze its results
+Then, our goal is to implement a base model and several model variations, check their metrics and choose a final model for further results analysis.
 
 <p align="right"><a href="#toc">To top</a></p>
 
@@ -137,8 +137,8 @@ We managed to train the model but showed signs of overfit:
 
 ![](images/model-0100-metrics.png)
 
-We tried to improve the metrics by adding `dropout` layers between the fully connected layers of the classifier and batch normalization but 
-the accuracy peaked around 25% and didn´t get better, even if the model was trained for more epochs.
+We tried to improve the metrics by adding `dropout` layers between the fully connected layers of the classifier and batch normalization but the accuracy peaked around 25% and didn´t get better, even if the model was trained for more epochs.
+
 A quick analysis of the dataset showed it was highly inbalanced, with answers 1, 2 and 3 outnumbering the others alltogether. We used a weighted loss using #annotations/freq(annotation) to see what was the impact on the accuracy. The result was: more classes participated in the accuracy but the overall accuracy didn't improve.
 
 A new dataset of 7500 samples (+ 250 for validation) with same selection as before (answers 1-20). Accuracy raised to 35%. Below expectations considering the task had been simplificated.
@@ -289,14 +289,14 @@ On the down size, precalculating the image embeddings prevents from finetuning t
 # Final Tests <a name="final"></a>
 In this section we focus on the results obtained with the 100k dataset. After prliminary tests, the following variations of the models have bbeen choosen for final comparison and analysis:
 
-|      Name      	    | Image Channel 	|    Question Channel   	|
-|:--------------:	    |:-------------:	|:---------------------:	|
-|   VGG16 GUSE   	    |     VGG16     	|          GUSE         	|
-|  ResNet50 GUSE 	    |    ResNet50   	|          GUSE         	|
-|   VGG16 WE + LSTM   	|     VGG16     	| Word Embedding + LSTM 	|
-|  ResNet50 WE + LSTM 	|    ResNet50   	| Word Embedding+ LSTM  	|
-|   VGG16 Glove + LSTM 	|     VGG16     	|      GloVe + LSTM     	|
-| ResNet50 Glove + LSTM	|    ResNet50   	|      GloVe + LSTM     	|
+|      Name      	    | Image Channel 	|    Question Channel   	|       Combination       |
+|:---------------------:|:-----------------:|:-------------------------:|:-----------------------:|
+|     VGG16 GUSE 	    |     VGG16     	|          GUSE         	|Point-wise Multiplicaiton|
+|    ResNet50 GUSE 	    |    ResNet50   	|          GUSE         	|Point-wise Multiplicaiton|
+|   VGG16 WE + LSTM   	|     VGG16     	| Word Embedding + LSTM 	|Point-wise Multiplicaiton|
+|  ResNet50 WE + LSTM 	|    ResNet50   	| Word Embedding+ LSTM  	|Point-wise Multiplicaiton|
+|  VGG16 Glove + LSTM 	|     VGG16     	|      GloVe + LSTM     	|Point-wise Multiplicaiton|
+| ResNet50 Glove + LSTM	|    ResNet50   	|      GloVe + LSTM     	|Point-wise Multiplicaiton|
 
 <p align="right"><a href="#toc">To top</a></p>
 
@@ -321,7 +321,7 @@ As the course advanced we felt ready for the full implementation of one of the m
 
 The goal of this implemetation was to determine wether including the question embedding as a trainable part of the network wolud result into a better accuracy. Following the same rationale of the previous experiments regarding the pre-trained image classification network two versions of this model were implemented: one based on the paper implementation with a VGG16 network for the image branch ([see Collab notebook here](model-colabs/Original_VQA2015_VGG.ipynb)), and another with a ResNet50 network for the image branch ([see Collab notebook here](model-colabs/Original_VQA2015_ResNet.ipynb)). 
 
-A first implementation showed results similar to those obtained with the GUSE embedding used in the previous models, with test accuracies in the 35%-40% range (see the table at the end of this section for details). In this case the original paper choice for a VGG16 network results in an +5% accuracy increase with respect to the ResNet50 version. Loss curves show a clear overfitting case with the loss of the test set starting to increase after a few training epochs.
+A first implementation showed results similar to those obtained with the GUSE embedding used in the previous models, with test accuracies in the 35%-40% range (see the table at the end of this section for details). In this case the original paper choice for a VGG16 network results in an +5% accuracy increase with respect to the ResNet50 version. Loss curves show a clear overfitting pattern with the loss of the test set starting to increase after a few training epochs.
 
 ![](images/Original_VQA2015_VGG_metrics.png)
 ![](images/Original_VQA2015_ResNet_metrics.png)
@@ -335,15 +335,15 @@ In an attempt to improve these results several improvements were applied to the 
 
 The correspondig Collab notebooks of the implementation can be found [here for the VGG16 version](model-colabs/Improved_VQA2015_VGG.ipynb) and [here for the ResNet50 version](model-colabs/Improved_VQA2015_ResNet.ipynb).
 
-After these improvements test accuracies for both the VGG16 and the ResNet50 versions of the implementation showed slight improvements, specially the ResNet one, with a +7% accuracy increase. In both cases, it can be noticed that the improved networks are able to learn way faster, reaching accuracies in the training set around the 70% mark after only ~20 epochs, while the original models needed 100 epochs to reach similar results. The test accuracies, however are again in the same range as that of other model trained with the same dataset. Loss curves show the same behaviour as the one obtained with the original model.
+After these improvements test accuracies for the VGG16 version ingreased by +3% and for the ResNet50 version +7%. However, compared with the other models tested on the same dataset, these accuracies are in the same range. Loss curves show the same overfitting pattern as the one obtained with the original model. In both cases, it can be noticed that the improved networks are able to learn way faster, reaching accuracies in the training set around the 70% mark after only ~20 epochs, while the original models needed 100 epochs to reach similar results. This is probably due to tha fact that in this configuration word embeddings are being trained, thus resulting in a network with more parameters that can lead to a faster overfitting. 
 
 ![](images/Improved_VQA2015_VGG_metrics.png)
 ![](images/Improved_VQA2015_ResNet_metrics.png)
 
 The following table summarizes the results obtained in these experiments:
 
-|                   	        | Maximum Test Accuracy 	| Maximum Mean  Train Accuracy 	|
-|:-----------------:	        |:---------------------:	|:----------------------------:	|
+|            Model   	        | Maximum Test Accuracy 	| Maximum Mean  Train Accuracy 	|
+|:-----------------------------:|:-------------------------:|:-----------------------------:|
 |   Original VGG16 WE + LSTM  	|         40.60%        	|            71.90%            	|
 | Original Resnet50 WE + LSTM 	|         35.10%        	|            61.87%            	|
 |   Improved VGG16 WE + LSTM 	|         43.00%        	|            85.17%            	|
