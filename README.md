@@ -336,7 +336,7 @@ In an attempt to improve these results several improvements were applied to the 
 
 The correspondig Collab notebooks of the implementation can be found [here for the VGG16 version](model-colabs/Improved_VQA2015_VGG.ipynb) and [here for the ResNet50 version](model-colabs/Improved_VQA2015_ResNet.ipynb).
 
-After these improvements test accuracies for the VGG16 did not show any relevant improvement. However, the ResNet50 version of the implementation showed a +7% accuracy increase resulting in the best-performing model of this experiment. In both cases, it can be noticed that the improved networks are able to learn way faster, reaching accuracies in the training set around the 80% mark after only 20 epochs, while the original models did not even reach 70% after 100 epochs. The test accuracies, however are again in the same range as that of other model trained with the same dataset. Loss curves show the same behaviour as the one obtained with the original model.
+After these improvements test accuracies for both the VGG16 and the ResNet50 versions of the implementation showed slight improvements, specially the ResNet one, with a +7% accuracy increase. In both cases, it can be noticed that the improved networks are able to learn way faster, reaching accuracies in the training set around the 70% mark after only ~20 epochs, while the original models needed 100 epochs to reach similar results. The test accuracies, however are again in the same range as that of other model trained with the same dataset. Loss curves show the same behaviour as the one obtained with the original model.
 
 ![](images/Improved_VQA2015_VGG_metrics.png)
 ![](images/Improved_VQA2015_ResNet_metrics.png)
@@ -347,8 +347,8 @@ The following table summarizes the results obtained in these experiments:
 |:-----------------:	        |:---------------------:	|:----------------------------:	|
 |   Original VGG16 WE + LSTM  	|         40.60%        	|            71.90%            	|
 | Original Resnet50 WE + LSTM 	|         35.10%        	|            61.87%            	|
-|   Improved VGG16 WE + LSTM 	|         41.90%        	|            86.23%            	|
-| Improved Resnet50 WE + LSTM 	|         42.00%        	|            85.83%            	|
+|   Improved VGG16 WE + LSTM 	|         43.00%        	|            85.17%            	|
+| Improved Resnet50 WE + LSTM 	|         42.40%        	|            84.67%            	|
 
 The inclusion of a word embedding plus LSTM for the qustion embedding did not show relevant improvements to the overall accuracy compared to pre-trained embeddings. The similar accuracies obtained with all differnt tested architechtures suggests that no further accuracy increase can be reached using the current dataset. The imporved models that have shown a faster learning capacity would be nice candidates for a test with a larger dataset.
 
