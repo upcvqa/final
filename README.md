@@ -339,7 +339,7 @@ In an attempt to improve these results several improvements were applied to the 
 
 The correspondig Collab notebooks of the implementation can be found [here for the VGG16 version](model-colabs/Improved_VQA2015_VGG.ipynb) and [here for the ResNet50 version](model-colabs/Improved_VQA2015_ResNet.ipynb).
 
-After these improvements test accuracies for the VGG16 version ingreased by +3% and for the ResNet50 version +7%. However, compared with the other models tested on the same dataset, these accuracies are in the same range. Loss curves show the same overfitting pattern as the one obtained with the original model. In both cases, it can be noticed that the improved networks are able to learn way faster, reaching accuracies in the training set around the 70% mark after only ~20 epochs, while the original models needed 100 epochs to reach similar results. This is probably due to tha fact that in this configuration word embeddings are being trained, thus resulting in a network with more parameters that can lead to a faster overfitting. 
+After these improvements test accuracies increased by +3% for the VGG16 version and by +7% for the ResNet50 version. However, compared with the other models tested on the same dataset, these accuracies are in the same range. Loss curves show the same overfitting pattern as the one obtained with the original model. In both cases, it can be noticed that the improved networks are able to learn way faster then the original VQA 2015 implementation, reaching accuracies in the training set around the 70% mark after only ~20 epochs, while the original models needed 100 epochs to reach similar results. 
 
 ![](images/Improved_VQA2015_VGG_metrics.png)
 ![](images/Improved_VQA2015_ResNet_metrics.png)
@@ -376,7 +376,9 @@ This backend's Colab can be found [here](model-colabs/split_bend_glove.ipynb)
 
 ## Results Summary <a name="resultssummary"></a>
 
-|             	        | Maximum Test Accuracy 	| Maximum Mean  Train Accuracy 	|
+All the tested models with the 100k dataset provide accuracies in the 42%-47% range. Training the question embedding part provides higher accuracies in the Train set probably due to the fact that they contain more parameters to be trained, especially the WE + LSTM one. However, it does not provide any improvement with respect to the pre-trained word embeddings network (GUSE) in the Test dataset. We attribute this behaviour to the lack of the necessary data to learn to generalize properly.
+
+|             	        | Maximum Test Accuracy 	| Maximum Mean Train Accuracy 	|
 |:-----------------:    |:---------------------:	|:----------------------------:	|
 |   VGG16 GUSE   	    |         **47.10%**       	|            79.42%            	|
 |  ResNet50 GUSE 	    |         44.00%        	|            60.25%            	|
