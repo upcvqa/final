@@ -332,7 +332,6 @@ In an attempt to improve these results several improvements were applied to the 
 - All other Tanh activations were replaced by ReLU activations
 - Hidden LSTM states were restarted at each batch
 - BatchNorm added in the classifier
-- Dropout removed in the classifier
 
 The correspondig Collab notebooks of the implementation can be found [here for the VGG16 version](model-colabs/Improved_VQA2015_VGG.ipynb) and [here for the ResNet50 version](model-colabs/Improved_VQA2015_ResNet.ipynb).
 
