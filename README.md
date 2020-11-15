@@ -379,6 +379,8 @@ Accuracy peaked at 44.4%, beating the model with lstm but not the model with GUS
 |   VGG16 Glove + LSTM 	|         44.40%        	|            80.20%            	|
 | ResNet50 Glove + LSTM	|         43.70%        	|            73.70%            	|
 
+![](images/accuracy_comparison.png)
+
 <p align="right"><a href="#toc">To top</a></p>
 
 # Result analysis <a name="results"></a>
