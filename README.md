@@ -42,7 +42,7 @@ Visual Question Answering (VQA) it's aiming to answer Free-form and open-ended Q
 ![VQA examples](https://visualqa.org/static/img/vqa_examples.jpg)
 
 ## Motivation <a name="motivation"></a>
-We have decided this project because we considered that being able to answer a question from an image using AI it's 'cool' and, more importantly, it is a project that due to the multimodal approach requires that you must understand two of the most important disciplines in AI-DL: vision and language processing.
+We have decided to do this project because we considered that being able to answer a question from an image using AI it's 'cool' and, more importantly, it is a project that due to the multimodal approach requires that you must understand two of the most important disciplines in AI-DL: vision and language processing.
 
 In addition it's an area relatively new.  (2014 - Papers 2015) with plenty of opportunities for improvement and several possible business applications: 
 * Image retrieval - Product search in digital catalogs (e.g: Amazon)
@@ -70,7 +70,7 @@ In order to get shared access to our datasets, we stored them in a shared **Goog
 <p align="right"><a href="#toc">To top</a></p>
 
 # Data Sets <a name="datasets"></a>
-During the project several datasets for the different experiments were creted. Out of the ~100K images of the test dataset of the VQA 2015 paper the following datasets were created:
+During the project several datasets for the different experiments were creted. Out of the >200K image-question-answer triplets of the test dataset of the VQA 2015 paper the following datasets were created:
 | Name 	| # image-question-answer triplets 	| Answer Type 	|
 |:-:	|:--------------------------------:	|:-----------:	|
 | A 	|               0.1k                |  Number 1-20 	|
@@ -438,9 +438,9 @@ Sample on the left is a fail but a nice one: the model does not give the right a
 
 # Conclusions and Lessons Learned <a name="conclusions"></a>
 
-Preliminary tests showed that out of the several decisions to be made based on the experiments, only increasing the dataset size had a real impact on the final accuracy results. These results showed that a "bigger" ResNet model could slightly imporve the accracy, as also could using deepr classifiers or training the image network. The first two options could easily be transferred to the 100k dataset provided that the image embeddings were pre-computed and the image network remained frozen. It could not have been possible to work with such a big dataset and training the full network end to end, including the image branch, with the available computational resources. Therefore, we decided to favor the option of increasing the datset size at the expense of givig up training the image branch.
+Preliminary tests showed that out of the several decisions to be made based on the experiments, only increasing the dataset size had a real impact on the final accuracy results. These results showed that a "bigger" ResNet model could slightly imporve the accracy, as also could using deepr classifiers or training the image network. The first two options could easily be transferred to the 100k dataset provided that the image embeddings were pre-computed and the image network remained frozen. It could not have been possible to work with such a big dataset and training the full network end to end, including the image branch, with the available computational resources. Therefore, we decided to favor the option of increasing the datset size at the expense of postponing training the image branch.
 
-Final test with the 100k databease, however, showed that the different models attained similar accuracy results. This fact suggests that such accuracies could already be the best to be obtained with the 100k dataset and that further improvement would not come from improving the models' architecture, depth or tuning, but by increasing again the dataset size.
+Final tests with the 100k dataset, however, showed that the different configurations of the model attained similar accuracy results. This fact suggests that such accuracies could already be near the best to be obtained with this architecture and dataset. Further improvement would not come from improving the models' pre-trained sub-networks, classifier depth or tuning, but by either increasing again the dataset size or shwitching to a different acrchitecture.
 
 Focusing on the lessons learned during the project besides the particular resuts obtained with each model, we would like to highlight several items regarding implementation, modelling and tuning know-how summayzed in the following list:
 
