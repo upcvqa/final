@@ -513,6 +513,7 @@ Focusing on the lessons learned during the project besides the particular resuts
 
 # References <a name="references"></a>
 * [VQA.org](https://visualqa.org)
+* ["VQA: Visual Question Answering", Agrawal et al., ICCV 2015](https://arxiv.org/pdf/1505.00468.pdf)
 * [Resnet by Pytorch Team](https://pytorch.org/hub/pytorch_vision_resnet/)
 * [Batchnorm & Dropouts](https://towardsdatascience.com/batch-normalization-and-dropout-in-neural-networks-explained-with-pytorch-47d7a8459bcd)
 * [Understanding Learning Rate (towardsdatascience.com)](https://towardsdatascience.com/https-medium-com-dashingaditya-rakhecha-understanding-learning-rate-dd5da26bb6de)
@@ -520,6 +521,9 @@ Focusing on the lessons learned during the project besides the particular resuts
 * [Understanding Bidirectional RNN in PyTorch | by Ceshine Lee | Towards Data Science](https://towardsdatascience.com/understanding-bidirectional-rnn-in-pytorch-5bd25a5dd66)
 * [CS 230 - Recurrent Neural Networks Cheatsheet](https://stanford.edu/~shervine/teaching/cs-230/cheatsheet-recurrent-neural-networks)
 * [Tensorboard with Pytorch](https://pytorch.org/tutorials/recipes/recipes/tensorboard_with_pytorch.html)
+* [Taming LSTMs: Variable-sized mini-batches and why PyTorch is good for your health](https://www.kdnuggets.com/2018/06/taming-lstms-variable-sized-mini-batches-pytorch.html)
+* [Pad pack sequences for Pytorch batch processing with DataLoader](https://suzyahyah.github.io/pytorch/2019/07/01/DataLoader-Pad-Pack-Sequence.html)
+* [Transfer Learning with Convolutional Neural Networks in PyTorch](https://towardsdatascience.com/transfer-learning-with-convolutional-neural-networks-in-pytorch-dd09190245ce)
 
 <p align="right"><a href="#toc">To top</a></p>
 
