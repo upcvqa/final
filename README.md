@@ -512,10 +512,14 @@ Focusing on the lessons learned during the project besides the particular resuts
 <p align="right"><a href="#toc">To top</a></p>
 
 # References <a name="references"></a>
+* [VQA.org](https://visualqa.org)
+* [Resnet by Pytorch Team](https://pytorch.org/hub/pytorch_vision_resnet/)
+* [Batchnorm & Dropouts](https://towardsdatascience.com/batch-normalization-and-dropout-in-neural-networks-explained-with-pytorch-47d7a8459bcd)
 * [Understanding Learning Rate (towardsdatascience.com)](https://towardsdatascience.com/https-medium-com-dashingaditya-rakhecha-understanding-learning-rate-dd5da26bb6de)
 * [The Current Best of Universal Word Embeddings and Sentence Embeddings](https://medium.com/huggingface/universal-word-sentence-embeddings-ce48ddc8fc3a)
 * [Understanding Bidirectional RNN in PyTorch | by Ceshine Lee | Towards Data Science](https://towardsdatascience.com/understanding-bidirectional-rnn-in-pytorch-5bd25a5dd66)
 * [CS 230 - Recurrent Neural Networks Cheatsheet](https://stanford.edu/~shervine/teaching/cs-230/cheatsheet-recurrent-neural-networks)
+* [Tensorboard with Pytorch](https://pytorch.org/tutorials/recipes/recipes/tensorboard_with_pytorch.html)
 
 <p align="right"><a href="#toc">To top</a></p>
 
